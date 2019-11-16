@@ -21,20 +21,20 @@ public class EsecuzioneScheduler implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servlet) {
 		
-       scheduler = Executors.newSingleThreadScheduledExecutor();
-       eliminaPrenotazione = new EliminaPrenotazione(); 
-       scheduler.scheduleAtFixedRate(eliminaPrenotazione, DELAY, PERIODO_ESECUZIONE, TimeUnit.MINUTES);
+          scheduler = Executors.newSingleThreadScheduledExecutor();
+          eliminaPrenotazione = new EliminaPrenotazione(); 
+          scheduler.scheduleAtFixedRate(eliminaPrenotazione, DELAY, PERIODO_ESECUZIONE, TimeUnit.MINUTES);
      
-       dailyScheduler = new Scheduler();
-       resetDatabase = new ResetDatabase();
-       dailyScheduler.schedule("45 19 * * *", resetDatabase);
-       dailyScheduler.start();
+          dailyScheduler = new Scheduler();
+          resetDatabase = new ResetDatabase();
+          dailyScheduler.schedule("45 19 * * *", resetDatabase);
+          dailyScheduler.start();
     }
 	
     @Override
     public void contextDestroyed(ServletContextEvent servlet) {
 		
-    	scheduler.shutdown();
-	dailyScheduler.stop();
+    	  scheduler.shutdown();
+	  dailyScheduler.stop();
     }
 }
