@@ -1,7 +1,8 @@
 package listener;
 
-import persistence.DatabaseManager;
-import persistence.UtilDao;
+import exception.PersistenceException;
+import factory.DatabaseManager;
+import utils.UtilDao;
 
 public class ResetDatabase implements Runnable {
 	
@@ -9,8 +10,13 @@ public class ResetDatabase implements Runnable {
 	
 	@Override
 	public void run() {
-		
-		dao = DatabaseManager.getInstance().getDaoFactory().getUtilDao();
-		dao.resetDatabase();
+
+		try {
+			dao = DatabaseManager.getInstance().getDaoFactory().getUtilDao();
+			dao.resetDatabase();
+
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		}
 	}
 }

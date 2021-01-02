@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Logging;
-import persistence.DatabaseManager;
-import persistence.dao.LoggingDao;
+import entity.Logging;
+import factory.DatabaseManager;
+import repository.LoggingDao;
 
 @SuppressWarnings("serial")
 public class ControlloAccessi extends HttpServlet {

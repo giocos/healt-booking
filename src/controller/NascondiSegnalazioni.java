@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Segnalazione;
-import persistence.DatabaseManager;
-import persistence.dao.SegnalazioneDao;
+import entity.Segnalazione;
+import factory.DatabaseManager;
+import repository.SegnalazioneDao;
 
 @SuppressWarnings("serial")
 public class NascondiSegnalazioni extends HttpServlet {

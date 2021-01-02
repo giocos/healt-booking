@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Logging;
-import model.Amministratore;
-import model.Impiegato;
-import model.Segnalazione;
-import persistence.DatabaseManager;
-import persistence.dao.LoggingDao;
-import persistence.dao.AmministratoreDao;
-import persistence.dao.ImpiegatoDao;
-import persistence.dao.SegnalazioneDao;
+import entity.Logging;
+import entity.Amministratore;
+import entity.Impiegato;
+import entity.Segnalazione;
+import factory.DatabaseManager;
+import repository.LoggingDao;
+import repository.AmministratoreDao;
+import repository.ImpiegatoDao;
+import repository.SegnalazioneDao;
 
 @SuppressWarnings("serial")
 public class Login extends HttpServlet {

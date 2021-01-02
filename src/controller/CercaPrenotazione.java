@@ -9,11 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.CodiceQR;
-import model.Prenotazione;
-import persistence.DatabaseManager;
-import persistence.dao.CodiceQRDao;
-import persistence.dao.PrenotazioneDao;
+import entity.CodiceQR;
+import entity.Prenotazione;
+import factory.DatabaseManager;
+import repository.CodiceQRDao;
+import repository.PrenotazioneDao;
 
 @SuppressWarnings("serial")
 public class CercaPrenotazione extends HttpServlet {

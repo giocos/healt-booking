@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
-import model.Impiegato;
-import persistence.DatabaseManager;
-import persistence.dao.ImpiegatoDao;
+import entity.Impiegato;
+import factory.DatabaseManager;
+import repository.ImpiegatoDao;
 
 @SuppressWarnings("serial")
 public class RipristinoPassword extends HttpServlet {

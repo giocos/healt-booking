@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import model.CodiceQR;
-import model.Paziente;
-import model.Prenotazione;
-import persistence.DatabaseManager;
-import persistence.dao.CodiceQRDao;
-import persistence.dao.PazienteDao;
-import persistence.dao.PrenotazioneDao;
+import entity.CodiceQR;
+import entity.Paziente;
+import entity.Prenotazione;
+import factory.DatabaseManager;
+import repository.CodiceQRDao;
+import repository.PazienteDao;
+import repository.PrenotazioneDao;
 
 public class EliminaPrenotazione implements Runnable {
 	

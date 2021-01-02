@@ -15,7 +15,7 @@
   <servlet-mapping>
     <servlet-name>Home</servlet-name>
     <url-pattern>/home</url-pattern>
-    <url-pattern></url-pattern>
+    <url-pattern/>
   </servlet-mapping>
   <servlet>
     <servlet-name>EffettuaPrenotazione</servlet-name>

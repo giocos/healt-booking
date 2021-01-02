@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.CodiceQR;
-import persistence.DatabaseManager;
-import persistence.dao.CodiceQRDao;
-import persistence.dao.PrenotazioneDao;
+import entity.CodiceQR;
+import factory.DatabaseManager;
+import repository.CodiceQRDao;
+import repository.PrenotazioneDao;
 
 @SuppressWarnings("serial")
 public class ConvalidaPrenotazione extends HttpServlet {

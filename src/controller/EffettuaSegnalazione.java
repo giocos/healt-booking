@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
-import model.Segnalazione;
-import persistence.DatabaseManager;
-import persistence.dao.SegnalazioneDao;
+import entity.Segnalazione;
+import factory.DatabaseManager;
+import repository.SegnalazioneDao;
 
 @SuppressWarnings("serial")
 public class EffettuaSegnalazione extends HttpServlet {

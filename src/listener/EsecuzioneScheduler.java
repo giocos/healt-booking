@@ -11,23 +11,27 @@ import it.sauronsoftware.cron4j.Scheduler;
 @WebListener
 public class EsecuzioneScheduler implements ServletContextListener {
 
-    private final long DELAY = 0;
-    private final long PERIODO_ESECUZIONE = 10;
+    private static final String CRON_SCHEDULE = "45 19 * * *";
+    private static final long PERIODO_ESECUZIONE = 10;
+    private static final long DELAY = 0;
+    //executors
     private ScheduledExecutorService scheduler;
-    private EliminaPrenotazione eliminaPrenotazione;
-    private ResetDatabase resetDatabase;
     private Scheduler dailyScheduler;
+    //tasks
+    private ResetDatabase resetDatabase;
+    private EliminaPrenotazione eliminaPrenotazione;
     
     @Override
     public void contextInitialized(ServletContextEvent servlet) {
-		
+
+          eliminaPrenotazione = new EliminaPrenotazione();
           scheduler = Executors.newSingleThreadScheduledExecutor();
-          eliminaPrenotazione = new EliminaPrenotazione(); 
           scheduler.scheduleAtFixedRate(eliminaPrenotazione, DELAY, PERIODO_ESECUZIONE, TimeUnit.MINUTES);
      
           dailyScheduler = new Scheduler();
           resetDatabase = new ResetDatabase();
-          dailyScheduler.schedule("45 19 * * *", resetDatabase);
+
+          dailyScheduler.schedule(CRON_SCHEDULE, resetDatabase);
           dailyScheduler.start();
     }
 	

@@ -3,15 +3,15 @@ package jdbc;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import model.Amministratore;
-import model.Impiegato;
-import model.Paziente;
-import persistence.DaoFactory;
-import persistence.PersistenceException;
-import persistence.UtilDao;
-import persistence.dao.AmministratoreDao;
-import persistence.dao.ImpiegatoDao;
-import persistence.dao.UniversitaDao;
+import entity.Amministratore;
+import entity.Impiegato;
+import entity.Paziente;
+import factory.DaoFactory;
+import exception.PersistenceException;
+import utils.UtilDao;
+import repository.AmministratoreDao;
+import repository.ImpiegatoDao;
+import repository.UniversitaDao;
 
 public class MainJDBC {
 
@@ -19,7 +19,7 @@ public class MainJDBC {
 		
 		final String[] credential = new String[4];
 		try {
-			FileReader f = new FileReader("./test/credenziali.txt"); 
+			FileReader f = new FileReader("../resources/credenziali.txt");
 		
 			BufferedReader b = new BufferedReader(f);
 			String line = b.readLine();

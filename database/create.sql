@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS AMMINISTRATORE (
+    username VARCHAR(16) NOT NULL,
+    password VARCHAR(16) NOT NULL,
+    PRIMARY KEY(username)
+);
+
+CREATE TABLE IF NOT EXISTS IMPIEGATO (
+    username VARCHAR(16) NOT NULL,
+    password VARCHAR(16) NOT NULL,
+    ruolo VARCHAR(16),
+    PRIMARY KEY(username)
+);

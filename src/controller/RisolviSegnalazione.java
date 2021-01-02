@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import model.Segnalazione;
-import persistence.DatabaseManager;
-import persistence.dao.SegnalazioneDao;
+import entity.Segnalazione;
+import factory.DatabaseManager;
+import repository.SegnalazioneDao;
 
 @SuppressWarnings("serial")
 public class RisolviSegnalazione extends HttpServlet {

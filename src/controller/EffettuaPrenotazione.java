@@ -15,14 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
-import model.CodiceQR;
-import model.Paziente;
-import model.Prenotazione;
-import persistence.DatabaseManager;
-import persistence.dao.CodiceQRDao;
-import persistence.dao.PazienteDao;
-import persistence.dao.UniversitaDao;
-import persistence.dao.PrenotazioneDao;
+import entity.CodiceQR;
+import entity.Paziente;
+import entity.Prenotazione;
+import factory.DatabaseManager;
+import repository.CodiceQRDao;
+import repository.PazienteDao;
+import repository.UniversitaDao;
+import repository.PrenotazioneDao;
 
 @SuppressWarnings("serial")
 public class EffettuaPrenotazione extends HttpServlet {

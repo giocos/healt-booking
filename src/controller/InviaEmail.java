@@ -2,15 +2,14 @@ package controller;
 
 import java.io.*;
 import java.util.*;
-import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import model.Email;
-import persistence.DatabaseManager;
-import persistence.dao.EmailDao;
+import entity.Email;
+import factory.DatabaseManager;
+import repository.EmailDao;
 
 import javax.mail.*;
 import javax.mail.internet.*;
