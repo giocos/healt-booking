@@ -12,33 +12,31 @@ import factory.DataSource;
 import entity.Paziente;
 import repository.UniversitaDao;
 
-public class UniversitaDaoJDBC implements UniversitaDao {
+public class UniversitaDaoJdbc implements UniversitaDao {
 
-	private DataSource dataSource;
+	private final DataSource dataSource;
 	
-	public UniversitaDaoJDBC(DataSource dataSource) {
+	public UniversitaDaoJdbc(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 	
 	@Override
 	public void save(Paziente paziente) {
-		
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-		String query = "INSERT INTO università(matricola, nome_paziente, cognome_paziente) VALUES (?,?,?)";
-		PreparedStatement statement = connection.prepareStatement(query);
-		statement.setLong(1, paziente.getMatricola());
-		statement.setString(2, paziente.getNome());
-		statement.setString(3, paziente.getCognome());
-		statement.executeUpdate();
-		
-		} catch(SQLException e) {
+			final String insert = "INSERT INTO università(matricola, nome_paziente, cognome_paziente) VALUES (?,?,?)";
+			final PreparedStatement statement = connection.prepareStatement(insert);
+			statement.setLong(1, paziente.getMatricola());
+			statement.setString(2, paziente.getNome());
+			statement.setString(3, paziente.getCognome());
+			statement.executeUpdate();
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-
 			try {
 				connection.close();
-			} catch (SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
@@ -46,65 +44,58 @@ public class UniversitaDaoJDBC implements UniversitaDao {
 
 	@Override
 	public Paziente findByPrimaryKey(Long id) {
-		
-		Connection connection = dataSource.getConnection();
 		Paziente paziente = null;
+		final Connection connection = dataSource.getConnection();
 		try {
-			PreparedStatement statement;
-			String query = "SELECT * FROM università WHERE matricola = ?";
-			statement = connection.prepareStatement(query);
+			final String find = "SELECT * FROM università WHERE matricola = ?";
+			final PreparedStatement statement = connection.prepareStatement(find);
 			statement.setLong(1, id);
-			ResultSet result = statement.executeQuery();
+			final ResultSet result = statement.executeQuery();
 			
 			if(result.next()) {
-				
 				paziente = new Paziente();	
 				paziente.setCodiceFiscale(result.getString("matricola"));
 				paziente.setNome(result.getString("nome_paziente"));				
 				paziente.setCognome(result.getString("cognome_paziente"));
 			}
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
-		}	
+		}
 		return paziente;
 	}
 
 	@Override
 	public List<Paziente> findAll() {
-		
-		Connection connection = dataSource.getConnection();
-		List<Paziente> universitari = new ArrayList<>();
+
 		Paziente paziente = null;
+		List<Paziente> universitari = new ArrayList<>();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String query = "SELECT * FROM univeristà";
-			PreparedStatement statement = connection.prepareStatement(query);
-			ResultSet result = statement.executeQuery();
+			final String find = "SELECT * FROM univeristà";
+			final PreparedStatement statement = connection.prepareStatement(find);
+			final ResultSet result = statement.executeQuery();
 			
-			while(result.next()) {
-				
+			while (result.next()) {
 				paziente = new Paziente();
 				paziente.setCodiceFiscale(result.getString("matricola"));
 				paziente.setNome(result.getString("nome_paziente"));
 				paziente.setCognome(result.getString("cognome_paziente"));
 				universitari.add(paziente);
 			}
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
-			
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}

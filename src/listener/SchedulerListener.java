@@ -9,36 +9,35 @@ import javax.servlet.annotation.WebListener;
 import it.sauronsoftware.cron4j.Scheduler;
 
 @WebListener
-public class EsecuzioneScheduler implements ServletContextListener {
+public class SchedulerListener implements ServletContextListener {
 
     private static final String CRON_SCHEDULE = "45 19 * * *";
-    private static final long PERIODO_ESECUZIONE = 10;
+    private static final long EXEC_TIME = 10;
     private static final long DELAY = 0;
     //executors
-    private ScheduledExecutorService scheduler;
     private Scheduler dailyScheduler;
+    private ScheduledExecutorService scheduler;
     //tasks
-    private ResetDatabase resetDatabase;
+    private ResetPrenotazioni resetPrenotazioni;
     private EliminaPrenotazione eliminaPrenotazione;
     
     @Override
     public void contextInitialized(ServletContextEvent servlet) {
-
-          eliminaPrenotazione = new EliminaPrenotazione();
-          scheduler = Executors.newSingleThreadScheduledExecutor();
-          scheduler.scheduleAtFixedRate(eliminaPrenotazione, DELAY, PERIODO_ESECUZIONE, TimeUnit.MINUTES);
-     
-          dailyScheduler = new Scheduler();
-          resetDatabase = new ResetDatabase();
-
-          dailyScheduler.schedule(CRON_SCHEDULE, resetDatabase);
-          dailyScheduler.start();
+        //init scheduler
+        dailyScheduler = new Scheduler();
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+        //init task
+        resetPrenotazioni = new ResetPrenotazioni();
+        eliminaPrenotazione = new EliminaPrenotazione();
+        //start
+        scheduler.scheduleAtFixedRate(eliminaPrenotazione, DELAY, EXEC_TIME, TimeUnit.MINUTES);
+        dailyScheduler.schedule(CRON_SCHEDULE, resetPrenotazioni);
+        dailyScheduler.start();
     }
 	
     @Override
     public void contextDestroyed(ServletContextEvent servlet) {
-		
-    	  scheduler.shutdown();
-	  dailyScheduler.stop();
+        scheduler.shutdown();
+        dailyScheduler.stop();
     }
 }

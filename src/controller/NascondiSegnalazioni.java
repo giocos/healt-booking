@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import entity.Segnalazione;
-import factory.DatabaseManager;
+import factory.DataBaseManager;
 import repository.SegnalazioneDao;
 
 @SuppressWarnings("serial")
@@ -16,23 +16,19 @@ public class NascondiSegnalazioni extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		SegnalazioneDao segnalazioneDao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
-	    List<Segnalazione> segnalazioni = segnalazioneDao.findAll();
-		HttpSession session = request.getSession();
+		final SegnalazioneDao segnalazioneDao = DataBaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
+		final List<Segnalazione> segnalazioni = segnalazioneDao.findAll();
+		final HttpSession session = request.getSession();
 	    
-	    Boolean tmp = true;
-	    Boolean first = true;
-	    for(Segnalazione s:segnalazioni) {
-	    	
+	    boolean tmp = true;
+	    boolean first = true;
+	    for (final Segnalazione s : segnalazioni) {
 	    	if(s.getRisolto()) {
-	    		
-	    		if(first) { 
+	    		if (first) {
 	    			tmp = s.getMostra(); 
 	    			first = false;
 	    		}
-	    		
-	    		if(tmp) {
+	    		if (tmp) {
 	    			s.setMostra(false);
 	    			segnalazioneDao.update(s);
 	    		}
@@ -43,11 +39,11 @@ public class NascondiSegnalazioni extends HttpServlet {
 	    	}
 	    }
   
-	    if(segnalazioni.size() > 0) 
-	      session.setAttribute("segnalazioni", segnalazioni);
-	    else
-	      session.setAttribute("vuoto", true);
-	    
+	    if (segnalazioni.size() > 0) {
+			session.setAttribute("segnalazioni", segnalazioni);
+		} else {
+			session.setAttribute("vuoto", true);
+		}
 	    response.sendRedirect("risolviSegnalazione");
 	}
 	

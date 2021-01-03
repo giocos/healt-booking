@@ -14,7 +14,6 @@ public class Logging implements Serializable {
 	public Logging() {}
 	
 	public Logging(Integer id, String azione, Date data, String orario, String nomeUtente) {
-		
 		this.id = id;
 		this.azione = azione;
 		this.data = data;

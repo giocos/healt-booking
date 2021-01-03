@@ -12,33 +12,31 @@ import factory.DataSource;
 import entity.CodiceQR;
 import repository.CodiceQRDao;
 
-public class CodiceQRDaoJDBC implements CodiceQRDao {
+public class CodiceQRDaoJdbc implements CodiceQRDao {
 
-	private DataSource dataSource;
+	private final DataSource dataSource;
 	
-	public CodiceQRDaoJDBC(DataSource dataSource) {
+	public CodiceQRDaoJdbc(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 	
 	@Override
 	public void save(CodiceQR codice) {
-		
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String insert = "INSERT INTO codice_qr(id, orario_scadenza, convalida) VALUES (?,?,?)";
-			PreparedStatement statement = connection.prepareStatement(insert);
+			final String insert = "INSERT INTO codice_qr(id, orario_scadenza, convalida) VALUES (?,?,?)";
+			final PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setString(1, codice.getCodice());
 			statement.setString(2, codice.getScadenza());
 			statement.setBoolean(3, codice.isConvalida());
 			statement.executeUpdate();
-		
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
@@ -46,111 +44,99 @@ public class CodiceQRDaoJDBC implements CodiceQRDao {
 
 	@Override
 	public CodiceQR findByPrimaryKey(String codice) {
-		
-		Connection connection = dataSource.getConnection();
 		CodiceQR codiceQr = null;
+		final Connection connection = dataSource.getConnection();
 		try {
-			PreparedStatement statement;
-			String query = "SELECT * FROM codice_qr WHERE id = ?";
-			statement = connection.prepareStatement(query);
+			final String find = "SELECT * FROM codice_qr WHERE id = ?";
+			final PreparedStatement statement = connection.prepareStatement(find);
 			statement.setString(1, codice);
-			ResultSet result = statement.executeQuery();
+			final ResultSet result = statement.executeQuery();
 			
-			if(result.next()) {
-				
+			if (result.next()) {
 				codiceQr = new CodiceQR();
 				codiceQr.setCodice(result.getString("id"));
 				codiceQr.setScadenza(result.getString("orario_Scadenza"));				
 				codiceQr.setConvalida(result.getBoolean("convalida"));
 			}
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
-		}	
+		}
 		return codiceQr;
 	}
 
 	@Override
 	public List<CodiceQR> findAll() {
-		
-		Connection connection = dataSource.getConnection();
-		List<CodiceQR> codici = new ArrayList<>();
 		CodiceQR codiceQR = null;
+		List<CodiceQR> codici = new ArrayList<>();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String query = "SELECT * FROM codice_qr";
-			PreparedStatement statement = connection.prepareStatement(query);
-			ResultSet result = statement.executeQuery();
+			final String find = "SELECT * FROM codice_qr";
+			final PreparedStatement statement = connection.prepareStatement(find);
+			final ResultSet result = statement.executeQuery();
 			
 			while(result.next()) {
-				
 				codiceQR = new CodiceQR();
 				codiceQR.setCodice(result.getString("id"));
 				codiceQR.setScadenza(result.getString("orario_Scadenza"));				
 				codiceQR.setConvalida(result.getBoolean("convalida"));
 				codici.add(codiceQR);
 			}
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
-		}	
+		}
 		return codici;
 	}
 
 	@Override
 	public void update(CodiceQR codice) {
-		
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String update = "UPDATE codice_qr SET convalida = ? WHERE id = ?";
-			PreparedStatement statement = connection.prepareStatement(update);
+			final String update = "UPDATE codice_qr SET convalida = ? WHERE id = ?";
+			final PreparedStatement statement = connection.prepareStatement(update);
 			statement.setBoolean(1, codice.isConvalida());
 			statement.setString(2, codice.getCodice());
 			statement.executeUpdate();
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
-		
 	}
 
 	@Override
 	public void delete(CodiceQR codice) {
-		
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String delete = "DELETE FROM codice_qr WHERE id = ? ";
-			PreparedStatement statement = connection.prepareStatement(delete);
+			final String delete = "DELETE FROM codice_qr WHERE id = ? ";
+			final PreparedStatement statement = connection.prepareStatement(delete);
 			statement.setString(1, codice.getCodice());
 			statement.executeUpdate();
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}

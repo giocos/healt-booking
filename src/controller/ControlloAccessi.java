@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import entity.Logging;
-import factory.DatabaseManager;
+import factory.DataBaseManager;
 import repository.LoggingDao;
 
 @SuppressWarnings("serial")
@@ -17,22 +17,18 @@ public class ControlloAccessi extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		HttpSession session = request.getSession();
-
-		if(session.getAttribute("loggatoAdmin") != null) { 
-			
-			if(session.getAttribute("loggatoAdmin").equals(true)) {
-		
-				LoggingDao loggingDao = DatabaseManager.getInstance().getDaoFactory().getLoggingDao();
-				List<Logging> log = loggingDao.findAll();
+		final HttpSession session = request.getSession();
+		if (session.getAttribute("loggatoAdmin") != null) {
+			if (session.getAttribute("loggatoAdmin").equals(true)) {
+				final LoggingDao loggingDao = DataBaseManager.getInstance().getDaoFactory().getLoggingDao();
+				final List<Logging> logs = loggingDao.findAll();
 				
-				if(log.size() > 0)
-					request.setAttribute("accessi", log);
-				else
+				if (logs.size() > 0) {
+					request.setAttribute("accessi", logs);
+				} else {
 					request.setAttribute("nessun_accesso", true);
-			
-		    	RequestDispatcher dispatcher = request.getRequestDispatcher("html/visualizza_accessi.jsp");
+				}
+				final RequestDispatcher dispatcher = request.getRequestDispatcher("html/visualizza_accessi.jsp");
 		    	dispatcher.forward(request, response);
 			}
 			return;

@@ -7,10 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import buffer.BufferFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 import entity.Impiegato;
-import factory.DatabaseManager;
+import factory.DataBaseManager;
 import repository.ImpiegatoDao;
 
 @SuppressWarnings("serial")
@@ -23,9 +25,8 @@ public class RipristinoPassword extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		StringBuffer jsonReceived = new StringBuffer();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));		
+		final StringBuffer jsonReceived = BufferFactory.getStringBuffer();
+		final BufferedReader reader = BufferFactory.getBufferReader(request.getInputStream());
 		String line = reader.readLine();
 		
 		while(line != null) {
@@ -34,26 +35,26 @@ public class RipristinoPassword extends HttpServlet {
 		}		
 		
 		try {
-			JSONObject json = new JSONObject(jsonReceived.toString());
-		
-			String username = json.getString("username");
-			String newPassword = json.getString("password");
-			
-			ImpiegatoDao impiegatoDao = DatabaseManager.getInstance().getDaoFactory().getImpiegatoDao();
-			Impiegato impiegato = impiegatoDao.findByPrimaryKey(username);
+			final JSONObject json = new JSONObject(jsonReceived.toString());
+
+			final String username = json.getString("username");
+			final String newPassword = json.getString("password");
+
+			final ImpiegatoDao impiegatoDao = DataBaseManager.getInstance().getDaoFactory().getImpiegatoDao();
+			final Impiegato impiegato = impiegatoDao.findByPrimaryKey(username);
 				
-			if(impiegato != null) {
-				
+			if (impiegato != null) {
 				impiegato.setPassword(newPassword);
 				impiegatoDao.update(impiegato);
 				response.getWriter().write("Password ripristinata correttamente");
-				
 			} else {
 				response.getWriter().write("Impiegato con user '" + username + "' non presente");
 			}
 		
-		} catch(JSONException e) {
+		} catch (final JSONException e) {
 			e.printStackTrace();
+		} finally {
+			reader.close();
 		}
 	}
 }

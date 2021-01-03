@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import entity.Segnalazione;
-import factory.DatabaseManager;
+import factory.DataBaseManager;
 import repository.SegnalazioneDao;
 
 @SuppressWarnings("serial")
@@ -19,9 +19,7 @@ public class Home extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		session = request.getSession();
-	
 		if(session.getAttribute("loggato") != null && session.getAttribute("loggato").equals(true)) {
 			session.setAttribute("numSegnalazioni", contaSegnalazioni());
 		} else {
@@ -29,14 +27,13 @@ public class Home extends HttpServlet {
 		}
 		
 		if(session.getAttribute("wrong") != null) {
-			
 			if(session.getAttribute("wrong").equals(false)) {
 				session.setAttribute("popUp", false);
 			} else {
 				session.setAttribute("wrong", false);
 			}
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
+		final RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
 		dispatcher.forward(request, response);
 	}
 	
@@ -47,7 +44,6 @@ public class Home extends HttpServlet {
 	
 	@Override
 	public void destroy() {
-		
 		if(session != null) { 
 			if(session.getAttribute("loggato").equals(true)) {
 //				System.out.println("INVALIDATE");
@@ -57,15 +53,9 @@ public class Home extends HttpServlet {
 	}
 	
 	private int contaSegnalazioni() {
-		
-		SegnalazioneDao dao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
-		List<Segnalazione> segnalazioni = dao.findAll();
-		
-		int cont = 0;
-		for(Segnalazione s:segnalazioni)  {
-			if(!s.getRisolto()) 
-				cont ++;
-		}
-		return cont;
+		final SegnalazioneDao dao = DataBaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
+		final List<Segnalazione> segnalazioni = dao.findAll();
+
+		return (int) segnalazioni.stream().filter(s -> !s.getRisolto()).count();
 	}
 }

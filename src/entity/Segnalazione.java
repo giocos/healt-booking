@@ -17,8 +17,8 @@ public class Segnalazione implements Serializable {
 	public Segnalazione() {}
 	
 	public Segnalazione(Integer id, String email, String nomeUtente, String motivazione, 
-			String domanda, String risposta, Boolean risolto) {
-		
+						String domanda, String risposta, Boolean risolto)
+	{
 		this.id = id;
 		this.email = email;
 		this.nomeUtente = nomeUtente;

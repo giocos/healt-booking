@@ -13,35 +13,31 @@ import factory.DataSource;
 import entity.Segnalazione;
 import repository.SegnalazioneDao;
 
-public class SegnalazioneDaoJDBC implements SegnalazioneDao {
+public class SegnalazioneDaoJdbc implements SegnalazioneDao {
 
-	private DataSource dataSource;
+	private final DataSource dataSource;
 	
-	public SegnalazioneDaoJDBC(DataSource dataSource) {
+	public SegnalazioneDaoJdbc(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 	
 	@Override
-	public int assignId() {
-		
-		Connection connection = dataSource.getConnection();
+	synchronized public int getId() {
+		final Connection connection = dataSource.getConnection();
 		try {
-			String query = "SELECT COUNT(*) AS count FROM segnalazione";
-			PreparedStatement statement = connection.prepareStatement(query);
-			ResultSet result = statement.executeQuery();
-			
-			while(result.next()) {
+			final String count = "SELECT COUNT(*) AS count FROM segnalazione";
+			final PreparedStatement statement = connection.prepareStatement(count);
+			final ResultSet result = statement.executeQuery();
+
+			if (result.next()) {
 				return result.getInt(1);
 			}
-			
-		} catch(SQLException e) {
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
-			
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
@@ -50,14 +46,13 @@ public class SegnalazioneDaoJDBC implements SegnalazioneDao {
 	
 	@Override
 	public void save(Segnalazione segnalazione) {
-		
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String insert = "INSERT INTO segnalazione(id, nome_utente, email, motivazione, commento, risposta, risolto, mostra) VALUES (?,?,?,?,?,?,?,?);";
-			PreparedStatement statement = connection.prepareStatement(insert);
+			final String insert = "INSERT INTO segnalazione(id, nome_utente, email, motivazione, commento, risposta, risolto, mostra) VALUES (?,?,?,?,?,?,?,?);";
+			final PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setInt(1, segnalazione.getId());
 			statement.setString(2, segnalazione.getNomeUtente());
-			if(segnalazione.getCommento() != null) { 
+			if (segnalazione.getCommento() != null) {
 				statement.setString(3, segnalazione.getEmail());
 			} else {
 				statement.setNull(3, Types.NULL);
@@ -68,33 +63,29 @@ public class SegnalazioneDaoJDBC implements SegnalazioneDao {
 			statement.setBoolean(7, false);
 			statement.setBoolean(8, true);
 			statement.executeUpdate();
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-				
-			} catch(SQLException e) {
-				e.printStackTrace();
+			} catch (final SQLException e) {
+				throw new PersistenceException(e.getMessage());
 			}
 		}
 	}
 
 	@Override
 	public List<Segnalazione> findAll() {
-		
-		Connection connection = dataSource.getConnection();
-		List<Segnalazione> segnalazioni = new ArrayList<>();
 		Segnalazione segnalazione = null;
+		final List<Segnalazione> segnalazioni = new ArrayList<>();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String query = "SECOND * FROM segnalazione ORDER BY id ASC";
-			PreparedStatement statement = connection.prepareStatement(query);
-			ResultSet result = statement.executeQuery();
+			final String find = "SELECT * FROM segnalazione ORDER BY id ASC";
+			final PreparedStatement statement = connection.prepareStatement(find);
+			final ResultSet result = statement.executeQuery();
 			
 			while(result.next()) {
-			
 				segnalazione = new Segnalazione();
 				segnalazione.setId(result.getInt("id"));
 				segnalazione.setNomeUtente(result.getString("nome_utente"));
@@ -106,16 +97,14 @@ public class SegnalazioneDaoJDBC implements SegnalazioneDao {
 				segnalazione.setMostra(result.getBoolean("mostra"));
 				segnalazioni.add(segnalazione);
 			}
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-				
-			} catch(SQLException e) {
-				e.printStackTrace();
+			} catch (final SQLException e) {
+				throw new PersistenceException(e.getMessage());
 			}
 		}
 		return segnalazioni;
@@ -123,25 +112,22 @@ public class SegnalazioneDaoJDBC implements SegnalazioneDao {
 
 	@Override
 	public void update(Segnalazione segnalazione) {
-	
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String update = "UPDATE segnalazione SET risposta = ?, risolto = ?, mostra = ? WHERE id = ?";
-			PreparedStatement statement = connection.prepareStatement(update);
+			final String update = "UPDATE segnalazione SET risposta = ?, risolto = ?, mostra = ? WHERE id = ?";
+			final PreparedStatement statement = connection.prepareStatement(update);
 			statement.setString(1, segnalazione.getRisposta());
 			statement.setBoolean(2, segnalazione.getRisolto());
 			statement.setBoolean(3, segnalazione.getMostra());
 			statement.setInt(4, segnalazione.getId());
 			statement.executeUpdate();
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
-			
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
@@ -149,22 +135,19 @@ public class SegnalazioneDaoJDBC implements SegnalazioneDao {
 
 	@Override
 	public void delete(Segnalazione segnalazione) {
-		
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String delete = "DELETE FROM segnalazione WHERE id = ?";
+			final String delete = "DELETE FROM segnalazione WHERE id = ?";
 			PreparedStatement statement = connection.prepareStatement(delete);
 			statement.setInt(1, segnalazione.getId());
 			statement.executeUpdate();
 			
-		} catch(SQLException e) {
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
-			
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}

@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import buffer.BufferFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import entity.Segnalazione;
-import factory.DatabaseManager;
+import factory.DataBaseManager;
 import repository.SegnalazioneDao;
 
 @SuppressWarnings("serial")
@@ -23,23 +24,20 @@ public class RisolviSegnalazione extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession();
-		
-		if(session.getAttribute("loggato") != null) { 
-			
-			if(session.getAttribute("loggato").equals(true)) {
-		
-				String risposta = request.getParameter("risposta");
-			    List<Segnalazione> s = risolviSegnalazione("", risposta);
+		final HttpSession session = request.getSession();
+		if (session.getAttribute("loggato") != null) {
+			if (session.getAttribute("loggato").equals(true)) {
+				final String risposta = request.getParameter("risposta");
+				final List<Segnalazione> s = risolviSegnalazione("", risposta);
 			    
-			    if(s.size() > 0)
-				     request.setAttribute("segnalazioni", s);
-				 else
-					 request.setAttribute("vuoto", true);
-		    	    
-			    RequestDispatcher dispatcher = request.getRequestDispatcher("html/segnalazioni.jsp");
+			    if (s.size() > 0) {
+					request.setAttribute("segnalazioni", s);
+				} else {
+					request.setAttribute("vuoto", true);
+				}
+				final RequestDispatcher dispatcher = request.getRequestDispatcher("html/segnalazioni.jsp");
 			    dispatcher.forward(request, response);
+
 			    return;
 			}
 		}
@@ -48,9 +46,8 @@ public class RisolviSegnalazione extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		StringBuffer jsonReceived = new StringBuffer();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));		
+		final StringBuffer jsonReceived = BufferFactory.getStringBuffer();
+		final BufferedReader reader = BufferFactory.getBufferReader(request.getInputStream());
 		String line = reader.readLine();
 		
 		while(line != null) {
@@ -59,29 +56,27 @@ public class RisolviSegnalazione extends HttpServlet {
 		}		
 		
 		try {
-			JSONObject json = new JSONObject(jsonReceived.toString());
-			
-			String risposta = json.getString("risposta");
-		    String id = json.getString("id");
+			final JSONObject json = new JSONObject(jsonReceived.toString());
+			final String risposta = json.getString("risposta");
+			final String id = json.getString("id");
 		    
 		    risolviSegnalazione(id, risposta);
-		    
-//		    response.setContentType("text/html");
+			response.setContentType("text/html");
 			
-		} catch(JSONException e) {
+		} catch (final JSONException e) {
 			e.printStackTrace();
+		} finally {
+			reader.close();
 		}
 	}
 	
 	private List<Segnalazione> risolviSegnalazione(String id, String risposta) {
-		SegnalazioneDao segnalazioneDao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
-		List<Segnalazione> segnalazioni = segnalazioneDao.findAll();
+		final SegnalazioneDao segnalazioneDao = DataBaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
+		final List<Segnalazione> segnalazioni = segnalazioneDao.findAll();
 		  
-		if(!id.equals("")) {
-		    for(Segnalazione s:segnalazioni) {
-		    	
-		    	if(s.getId().equals(Integer.parseInt(id))) {
-		    		
+		if (!id.equals("")) {
+		    for (final Segnalazione s : segnalazioni) {
+		    	if (s.getId().equals(Integer.parseInt(id))) {
 		    		s.setRisposta(risposta);
 		            s.setRisolto(true);
 		            segnalazioneDao.update(s);
@@ -91,5 +86,4 @@ public class RisolviSegnalazione extends HttpServlet {
 		}
 	    return segnalazioni;
 	}
-	
 }

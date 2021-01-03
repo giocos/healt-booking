@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import entity.CodiceQR;
 import entity.Prenotazione;
-import factory.DatabaseManager;
+import factory.DataBaseManager;
 import repository.CodiceQRDao;
 import repository.PrenotazioneDao;
 
@@ -25,29 +25,26 @@ public class CercaPrenotazione extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 		
-		String hexcode = request.getParameter("hexcode");
-		CodiceQRDao codiceQRDao = DatabaseManager.getInstance().getDaoFactory().getCodiceQRDao();
-		PrenotazioneDao prenotazioneDao = DatabaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
-		CodiceQR codiceQR = codiceQRDao.findByPrimaryKey(hexcode);
+		final String hexcode = request.getParameter("hexcode");
+		final CodiceQRDao codiceQRDao = DataBaseManager.getInstance().getDaoFactory().getCodiceQRDao();
+		final PrenotazioneDao prenotazioneDao = DataBaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
+		final CodiceQR codiceQR = codiceQRDao.findByPrimaryKey(hexcode);
 		
-		if(codiceQR != null) {	
-		
-			Calendar scadenza = Calendar.getInstance();
-			String[] orario = codiceQR.getScadenza().split(":");
+		if (codiceQR != null) {
+			final Calendar scadenza = Calendar.getInstance();
+			final String[] orario = codiceQR.getScadenza().split(":");
 			
 			scadenza.set(Calendar.HOUR_OF_DAY, Integer.parseInt(orario[0]));
 			scadenza.set(Calendar.MINUTE, Integer.parseInt(orario[1]));
 			
-			if(new Date().after(scadenza.getTime())) {
+			if (new Date().after(scadenza.getTime())) {
 				response.getWriter().write("false;Prenotazione scaduta");
 			} else {
-				Prenotazione prenotazione = prenotazioneDao.findByPrimaryKey(codiceQR.getCodice());
+				final Prenotazione prenotazione = prenotazioneDao.findByPrimaryKey(codiceQR.getCodice());
 				response.getWriter().write("true;" + codiceQR.getScadenza() + ";" + prenotazione.getOrarioVisita() + ";" + hexcode + ";" + codiceQR.isConvalida());
 			}
-			
 		} else {
 			response.getWriter().write("false;Codice non trovato");
 		} 

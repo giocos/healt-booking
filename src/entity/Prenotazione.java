@@ -12,8 +12,9 @@ public class Prenotazione implements Serializable {
 	
 	public Prenotazione() {}
 	
-	public Prenotazione(String codiceVisita, String nomePaziente, String cognomePaziente, String orarioVisita, Double importo) {
-		
+	public Prenotazione(String codiceVisita, String nomePaziente, String cognomePaziente,
+						String orarioVisita, Double importo)
+	{
 		this.codiceVisita = codiceVisita;
 		this.nomePaziente = nomePaziente;
 		this.cognomePaziente = cognomePaziente;

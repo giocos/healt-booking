@@ -1,4 +1,4 @@
-package utils;
+package sequence;
 
 import exception.PersistenceException;
 
@@ -8,20 +8,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 //assegna in modo progressivo un id per ogni tabella presente nel nostro DB
-public class IdBroker {
+public final class IdBroker {
 
-	private static final String query = "SELECT nextval('sequenza_id') AS id";
+	private static final String SELECT = "SELECT nextval('sequence_id') AS id";
 
-	public static Long getId(Connection connection) throws PersistenceException {
-		
+	public static synchronized Long getId(Connection connection) throws PersistenceException {
 		Long id = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement(query);
+			PreparedStatement statement = connection.prepareStatement(SELECT);
 			ResultSet result = statement.executeQuery();
-			result.next();
-			id = result.getLong("id");
-			
-		} catch(SQLException e) {
+			if (result.next()) {
+				id = result.getLong("id");
+			}
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		}
 		return id;

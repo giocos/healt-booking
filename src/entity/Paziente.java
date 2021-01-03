@@ -13,9 +13,9 @@ public class Paziente implements Serializable {
 	
 	public Paziente() {}
 	
-	public Paziente(String codiceFiscale, String nome, String cognome, Long matricola, String invalidita, 
-			String codiceQR) {
-		
+	public Paziente(String codiceFiscale, String nome, String cognome,
+					Long matricola, String invalidita, String codiceQR)
+	{
 		this.codiceFiscale = codiceFiscale;
 		this.nome = nome;
 		this.cognome = cognome;

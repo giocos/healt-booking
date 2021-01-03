@@ -3,12 +3,13 @@ package repository;
 import java.util.List;
 
 import entity.Segnalazione;
+import exception.PersistenceException;
 
 public interface SegnalazioneDao {
 
-	int assignId();
-	void save(Segnalazione segnalazione);
-	List<Segnalazione> findAll();
-	void update(Segnalazione segnalazione);
-	void delete(Segnalazione segnalazione);
+	int getId() throws PersistenceException;
+	void save(Segnalazione segnalazione) throws PersistenceException;
+	List<Segnalazione> findAll() throws PersistenceException;
+	void update(Segnalazione segnalazione) throws PersistenceException;
+	void delete(Segnalazione segnalazione) throws PersistenceException;
 }

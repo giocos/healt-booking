@@ -9,10 +9,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import buffer.BufferFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 import entity.Segnalazione;
-import factory.DatabaseManager;
+import factory.DataBaseManager;
 import repository.SegnalazioneDao;
 
 @SuppressWarnings("serial")
@@ -25,40 +27,41 @@ public class EffettuaSegnalazione extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		StringBuffer jsonReceived = new StringBuffer();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));		
+		final StringBuffer jsonReceived = BufferFactory.getStringBuffer();
+		final BufferedReader reader = BufferFactory.getBufferReader(request.getInputStream());
 		String line = reader.readLine();
 		
-		while(line != null) {
+		while (line != null) {
 			jsonReceived.append(line);
 			line = reader.readLine();
 		}		
 		
 		try {
-			JSONObject json = new JSONObject(jsonReceived.toString());
-	
+			final JSONObject json = new JSONObject(jsonReceived.toString());
+
 			String email = "Nessuna";
-			if(!json.getString("email").equals("")) {
+			if (!json.getString("email").equals("")) {
 				 email = json.getString("email");
 			}
-			String nome = json.getString("nome");
-			String cognome = json.getString("cognome");
-			String motivazione = json.getString("motivazione");
-			String commento = json.getString("commento");
-			
-			SegnalazioneDao segnalazioneDao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
-		
-			Segnalazione segnalazione = new Segnalazione();
-			segnalazione.setId(segnalazioneDao.assignId() + 1);
+			final String nome = json.getString("nome");
+			final String cognome = json.getString("cognome");
+			final String motivazione = json.getString("motivazione");
+			final String commento = json.getString("commento");
+
+			final SegnalazioneDao segnalazioneDao = DataBaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
+			final Segnalazione segnalazione = new Segnalazione();
+			segnalazione.setId(segnalazioneDao.getId() + 1);
 			segnalazione.setEmail(email);
 			segnalazione.setNomeUtente(nome + " " + cognome);
 			segnalazione.setMotivazione(motivazione);
 			segnalazione.setCommento(commento);
+
 			segnalazioneDao.save(segnalazione);
 		
-		} catch(JSONException e) {
+		} catch (final JSONException e) {
 			e.printStackTrace();
+		} finally {
+			reader.close();
 		}
 	}
 

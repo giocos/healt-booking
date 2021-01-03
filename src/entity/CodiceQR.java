@@ -15,7 +15,6 @@ public class CodiceQR implements Serializable {
 	public CodiceQR() {}
 	
 	public CodiceQR(String esadecimale, String scadenza, Boolean convalida) {
-		
 		this.esadecimale = esadecimale;
 		this.convalida = convalida;
 		this.scadenza = scadenza;

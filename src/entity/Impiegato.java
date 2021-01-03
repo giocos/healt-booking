@@ -11,7 +11,6 @@ public class Impiegato implements Serializable {
 	public Impiegato() {}
 	
 	public Impiegato(String username, String password, String ruolo) {
-		
 		this.username = username;
 		this.password = password;
 		this.ruolo = ruolo;

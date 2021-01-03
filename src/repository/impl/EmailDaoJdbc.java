@@ -12,34 +12,32 @@ import factory.DataSource;
 import entity.Email;
 import repository.EmailDao;
 
-public class EmailDaoJDBC implements EmailDao {
+public class EmailDaoJdbc implements EmailDao {
 
-	private DataSource dataSource;
+	private final DataSource dataSource;
 	
-	public EmailDaoJDBC(DataSource dataSource) {
+	public EmailDaoJdbc(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 	
 	@Override
 	public void save(Email email) {
-		
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String insert = "insert INTO email(admin, messaggio, emittente, destinatario) values(?,?,?,?)";
-			PreparedStatement statement = connection.prepareStatement(insert);
+			final String insert = "INSERT INTO email(admin, messaggio, emittente, destinatario) VALUES (?,?,?,?)";
+			final PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setString(1, email.getAdmin());
 			statement.setString(2, email.getMessaggio());
 			statement.setString(3, email.getEmittente());
 			statement.setString(4, email.getDestinatario());
 			statement.executeUpdate();
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
@@ -47,17 +45,15 @@ public class EmailDaoJDBC implements EmailDao {
 
 	@Override
 	public List<Email> findAll() {
-		
-		Connection connection = dataSource.getConnection();
-		List<Email> emails = new ArrayList<>();
 		Email email = null;
+		List<Email> emails = new ArrayList<>();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String query = "select * FROM email";
-			PreparedStatement statement = connection.prepareStatement(query);
-			ResultSet result = statement.executeQuery();
+			final String find = "SELECT * FROM email";
+			final PreparedStatement statement = connection.prepareStatement(find);
+			final ResultSet result = statement.executeQuery();
 			
-			while(result.next()) {
-				
+			while (result.next()) {
 				email = new Email();
 				email.setAdmin(result.getString(1));
 				email.setMessaggio(result.getString(2));
@@ -65,13 +61,13 @@ public class EmailDaoJDBC implements EmailDao {
 				email.setDestinatario(result.getString(4));
 				emails.add(email);
 			}
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}

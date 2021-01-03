@@ -10,7 +10,6 @@ public class Amministratore implements Serializable {
 	public Amministratore() {}
 	
 	public Amministratore(String username, String password) {
-	
 		this.username = username;
 		this.password = password;
 	}

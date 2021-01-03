@@ -1,19 +1,19 @@
 package factory;
 
-public class DatabaseManager {
+public class DataBaseManager {
 
-	private static DatabaseManager database;
+	private static DataBaseManager database;
 
 	private final DaoFactory daoFactory;
 	
-	private DatabaseManager() {
+	private DataBaseManager() {
 		daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRESQL);
 	}
 
 	//Singleton Pattern
-	public static DatabaseManager getInstance() {
+	public static DataBaseManager getInstance() {
 		if (database == null) {
-			database = new DatabaseManager();
+			database = new DataBaseManager();
 		}
 		return database;
 	}

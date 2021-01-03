@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import entity.CodiceQR;
-import factory.DatabaseManager;
+import factory.DataBaseManager;
 import repository.CodiceQRDao;
 import repository.PrenotazioneDao;
 
@@ -16,27 +16,21 @@ public class ConvalidaPrenotazione extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession();
-		
-		if(session.getAttribute("loggato") != null) { 
-			
-			if(session.getAttribute("loggato").equals(true)) {
-		
-				String hexcode = request.getParameter("hexcode");
-				CodiceQRDao codiceQRDao = DatabaseManager.getInstance().getDaoFactory().getCodiceQRDao();
+		final HttpSession session = request.getSession();
+		if (session.getAttribute("loggato") != null) {
+			if (session.getAttribute("loggato").equals(true)) {
+				final String hexcode = request.getParameter("hexcode");
+				final CodiceQRDao codiceQRDao = DataBaseManager.getInstance().getDaoFactory().getCodiceQRDao();
+
+				final CodiceQR codiceQR = codiceQRDao.findByPrimaryKey(hexcode);
+				final PrenotazioneDao prenotazioneDao = DataBaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
 				
-				CodiceQR codiceQR = codiceQRDao.findByPrimaryKey(hexcode);
-				PrenotazioneDao p = DatabaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
-				
-				if(codiceQR == null) {
+				if (codiceQR == null) {
 					response.getWriter().write("Non &egrave; stata trovata alcuna prenotazione con il codice: " + hexcode);
-				} else 
-					if(codiceQR.isConvalida()) {
+				} else if(codiceQR.isConvalida()) {
 						response.getWriter().write("Prenotazione gi&agrave; convalidata");
-						
 					} else {
-						String importo = String.valueOf(p.findByPrimaryKey(hexcode).getImporto());
+						final String importo = String.valueOf(prenotazioneDao.findByPrimaryKey(hexcode).getImporto());
 						codiceQR.setConvalida(true);
 						codiceQRDao.update(codiceQR);
 						response.getWriter().write("true;Prenotazione convalidata con successo;" + importo);		

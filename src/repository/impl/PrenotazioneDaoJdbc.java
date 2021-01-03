@@ -12,21 +12,20 @@ import factory.DataSource;
 import entity.Prenotazione;
 import repository.PrenotazioneDao;
 
-public class PrenotazioneDaoJDBC implements PrenotazioneDao {
+public class PrenotazioneDaoJdbc implements PrenotazioneDao {
 
-	private DataSource dataSource;
+	private final DataSource dataSource;
 	
-	public PrenotazioneDaoJDBC(DataSource dataSource) {
+	public PrenotazioneDaoJdbc(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 	
 	@Override
 	public void save(Prenotazione prenotazione) {
-		
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String query = "INSERT INTO prenotazione(id_prenotazione, nome_paziente, cognome_paziente, orario_visita, importo) VALUES (?,?,?,?,?)";
-			PreparedStatement statement = connection.prepareStatement(query);
+			final String insert = "INSERT INTO prenotazione(id_prenotazione, nome_paziente, cognome_paziente, orario_visita, importo) VALUES (?,?,?,?,?)";
+			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setString(1, prenotazione.getCodiceVisita());
 			statement.setString(2, prenotazione.getNomePaziente());
 			statement.setString(3, prenotazione.getCognomePaziente());
@@ -34,13 +33,12 @@ public class PrenotazioneDaoJDBC implements PrenotazioneDao {
 			statement.setDouble(5, prenotazione.getImporto());
 			statement.executeUpdate();
 			
-		} catch(SQLException e) {
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
@@ -48,18 +46,16 @@ public class PrenotazioneDaoJDBC implements PrenotazioneDao {
 
 	@Override
 	public Prenotazione findByPrimaryKey(String codice) {
-		
-		Connection connection = dataSource.getConnection();
 		Prenotazione prenotazione = null;
+		final Connection connection = dataSource.getConnection();
 		try {
 			PreparedStatement statement;
-			String query = "SELECT * FROM prenotazione WHERE id_prenotazione = ?";
-			statement = connection.prepareStatement(query);
+			final String find = "SELECT * FROM prenotazione WHERE id_prenotazione = ?";
+			statement = connection.prepareStatement(find);
 			statement.setString(1, codice);
-			ResultSet result = statement.executeQuery();
+			final ResultSet result = statement.executeQuery();
 			
-			if(result.next()) {
-				
+			if (result.next()) {
 				prenotazione = new Prenotazione();
 				prenotazione.setCodiceVisita(result.getString(1));
 				prenotazione.setNomePaziente(result.getString(2));
@@ -67,34 +63,30 @@ public class PrenotazioneDaoJDBC implements PrenotazioneDao {
 				prenotazione.setOrarioVisita(result.getString(4));
 				prenotazione.setImporto(result.getDouble(5));
 			}
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
-		}	
+		}
 		return prenotazione;
 	}
 
 	@Override
 	public List<Prenotazione> findAll() {
-		
-		Connection connection = dataSource.getConnection();
-		List<Prenotazione> visite = new ArrayList<>();
 		Prenotazione prenotazione = null;
+		List<Prenotazione> visite = new ArrayList<>();
+		final Connection connection = dataSource.getConnection();
 		try {
-			PreparedStatement statement;
-			String query = "SELECT * FROM prenotazione";
-			statement = connection.prepareStatement(query);
-			ResultSet result = statement.executeQuery();
+			final String find = "SELECT * FROM prenotazione";
+			final PreparedStatement statement = connection.prepareStatement(find);
+			final ResultSet result = statement.executeQuery();
 			
 			while(result.next()) {
-				
 				prenotazione = new Prenotazione();
 				prenotazione.setCodiceVisita(result.getString(1));
 				prenotazione.setNomePaziente(result.getString(2));
@@ -103,13 +95,13 @@ public class PrenotazioneDaoJDBC implements PrenotazioneDao {
 				prenotazione.setImporto(result.getDouble(5));
 				visite.add(prenotazione);
 			}
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
@@ -118,25 +110,23 @@ public class PrenotazioneDaoJDBC implements PrenotazioneDao {
 
 	@Override
 	public void update(Prenotazione prenotazione) {
-		
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String update = "UPDATE prenotazione SET nome_paziente = ?, cognome_paziente = ?, orario_visita = ?, importo = ? WHERE id_prenotazione = ?";
-			PreparedStatement statement = connection.prepareStatement(update);
+			final String update = "UPDATE prenotazione SET nome_paziente = ?, cognome_paziente = ?, orario_visita = ?, importo = ? WHERE id_prenotazione = ?";
+			final PreparedStatement statement = connection.prepareStatement(update);
 			statement.setString(1, prenotazione.getNomePaziente());
 			statement.setString(2, prenotazione.getCognomePaziente());
 			statement.setString(3, prenotazione.getOrarioVisita());
 			statement.setDouble(4, prenotazione.getImporto());
 			statement.setString(5, prenotazione.getCodiceVisita());
 			statement.executeUpdate();
-			
-		} catch(SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
@@ -166,24 +156,22 @@ public class PrenotazioneDaoJDBC implements PrenotazioneDao {
 	
 	@Override
 	public int getTotalVisits() {
-		
-		Connection connection = dataSource.getConnection();
+		final Connection connection = dataSource.getConnection();
 		try {
-			String query = "SELECT COUNT(*) AS total FROM prenotazione";
-			PreparedStatement statement = connection.prepareStatement(query);
-			ResultSet result = statement.executeQuery();
+			final String count = "SELECT COUNT(*) AS total FROM prenotazione";
+			final PreparedStatement statement = connection.prepareStatement(count);
+			final ResultSet result = statement.executeQuery();
 			
-			while(result.next()) {
+			if (result.next()) {
 				return result.getInt(1);
 			}
-			
-		} catch (SQLException e) {
+
+		} catch (final SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
-			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (final SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}

@@ -1,15 +1,14 @@
 package factory;
 
+import factory.impl.PostgresDaoFactory;
 import repository.*;
-import utils.UtilDao;
 
 public abstract class DaoFactory {
 
 	public static final int HSQLDB = 1;
 	public static final int POSTGRESQL = 2;
 	
-	public static DaoFactory getDaoFactory(int whichFactory) {
-		
+	protected static DaoFactory getDaoFactory(int whichFactory) {
 		switch(whichFactory) {
 			case HSQLDB:
 				return null;

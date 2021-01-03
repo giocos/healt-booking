@@ -12,7 +12,6 @@ public class Email implements Serializable {
 	public Email() {}
 	
 	public Email(String admin, String messaggio, String emittente, String destinatario) {
-		
 		this.admin = admin;
 		this.messaggio = messaggio;
 		this.emittente = emittente;
