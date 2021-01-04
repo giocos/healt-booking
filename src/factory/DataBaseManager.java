@@ -2,7 +2,7 @@ package factory;
 
 public class DataBaseManager {
 
-	private static DataBaseManager database;
+	private static DataBaseManager manager;
 
 	private final DaoFactory daoFactory;
 	
@@ -12,10 +12,10 @@ public class DataBaseManager {
 
 	//Singleton Pattern
 	public static DataBaseManager getInstance() {
-		if (database == null) {
-			database = new DataBaseManager();
+		if (manager == null) {
+			manager = new DataBaseManager();
 		}
-		return database;
+		return manager;
 	}
 	
 	public DaoFactory getDaoFactory() {

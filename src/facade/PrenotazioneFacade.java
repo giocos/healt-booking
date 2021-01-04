@@ -31,7 +31,7 @@ public class PrenotazioneFacade {
     private static final String ORARIO_INIZIO = "00:00:00";
     private static final String ORARIO_FINE = "23:59:00";
 
-    private static PrenotazioneFacade instance = null;
+    private static PrenotazioneFacade facade = null;
 
     private String response;
 
@@ -40,10 +40,10 @@ public class PrenotazioneFacade {
     }
 
     public static PrenotazioneFacade getInstance() {
-        if (instance == null) {
-            instance = new PrenotazioneFacade();
+        if (facade == null) {
+            facade = new PrenotazioneFacade();
         }
-        return instance;
+        return facade;
     }
 
     public String checkPrenotazione() {
