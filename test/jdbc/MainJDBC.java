@@ -17,24 +17,24 @@ import repository.UniversitaDao;
 public class MainJDBC {
 
 	protected static String[] readCredential() throws IOException {
-		FileReader f = null;
-		BufferedReader b = null;
+		FileReader file = null;
+		BufferedReader buffer = null;
 		final String[] credential = new String[4];
 		try {
-			f = new FileReader("../resources/credenziali.txt");
-			b = new BufferedReader(f);
-			String line = b.readLine();
+			file = new FileReader("../resources/credenziali.txt");
+			buffer = new BufferedReader(file);
+			String line = buffer.readLine();
 			int i = 0;
 			
 			while (line != null) {
 				if(!line.matches("^[A-Z]+:$")) {
-					credential[i ++] = line;
+					credential[i++] = line;
 				}
-				line = b.readLine();
+				line = buffer.readLine();
 			}
 		} finally {
-			if (b != null) {
-				b.close();
+			if (buffer != null) {
+				buffer.close();
 			}
 		}
 		return credential;
@@ -54,19 +54,18 @@ public class MainJDBC {
 		final String[] ruoli = {"sportello", "sistema"};
 		
 		for (final String it : MainJDBC.readCredential()) {
+			final String[] curr = it.split(":");
 			if (count < 2) {
-				Amministratore admin = new Amministratore();
-				String[] curr = it.split(":");
+				final Amministratore admin = new Amministratore();
 				admin.setUsername(curr[0]);
-				admin.setPassword(curr[1]);	
+				admin.setPassword(curr[1]);
 				amministratoreDao.save(admin);
 			} else {
-				Impiegato imp = new Impiegato();
-				String[] curr = it.split(":");
-				imp.setUsername(curr[0]);
-				imp.setPassword(curr[1]);
-				imp.setRuolo(ruoli[count % 2]);
-				impiegatoDao.save(imp);
+				final Impiegato empl = new Impiegato();
+				empl.setUsername(curr[0]);
+				empl.setPassword(curr[1]);
+				empl.setRuolo(ruoli[count % 2]);
+				impiegatoDao.save(empl);
 			}
 			count ++;
 		}
