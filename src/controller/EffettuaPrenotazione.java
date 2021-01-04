@@ -114,9 +114,9 @@ public class EffettuaPrenotazione extends HttpServlet {
 				if (pazienteByPK != null) {
 					if (pazienteByPK.getNome().equals(paziente.getNome()) && pazienteByPK.getCognome().equals(paziente.getCognome())) {
 						imp = 0d;
-						pazienteByPK.setMatricola(matricola);
+						paziente.setMatricola(matricola);
 					} else {
-						pazienteByPK.setMatricola(null);
+						paziente.setMatricola(null);
 					}
 				} else {
 					paziente.setMatricola(null);
