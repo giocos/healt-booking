@@ -12,7 +12,7 @@ import facade.PrenotazioneFacade;
 
 @SuppressWarnings("serial")
 public class EffettuaPrenotazione extends HttpServlet {
-	
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
