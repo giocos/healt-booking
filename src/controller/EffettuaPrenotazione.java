@@ -27,7 +27,7 @@ public class EffettuaPrenotazione extends HttpServlet {
 			out.close();
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException ,IOException {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
