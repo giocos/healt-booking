@@ -17,6 +17,8 @@ import repository.EmailDao;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+import static controller.constants.EmailProperty.*;
+
 @WebServlet("/inviaEmail")
 public class InviaEmail extends HttpServlet {
 
@@ -46,25 +48,24 @@ public class InviaEmail extends HttpServlet {
 			final String from = json.getString("from");
 			final String body = json.getString("message");
 
-			final String host = "smtp.gmail.com";
 			final Properties properties = System.getProperties();
-			
-		    properties.setProperty("mail.transport.protocol", "smtp");     
-		    properties.setProperty("mail.host", host);
-		    properties.put("mail.smtp.auth", "true");
-		    properties.put("mail.smtp.port", "465");
-//		    properties.put("mail.debug", "true"); 
-		    properties.put("mail.smtp.socketFactory.port", "465");  
-		    properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");  
-		    properties.put("mail.smtp.socketFactory.fallback", "false");  
-		    properties.put("mail.smtp.starttls.enable", "true");
+			properties.setProperty("mail.transport.protocol", PROTOCOL);
+
+			properties.setProperty("mail.host", HOST);
+		    properties.put("mail.smtp.auth", AUTH);
+		    properties.put("mail.smtp.port", PORT);
+//		    properties.put("mail.debug", DEBUG);
+		    properties.put("mail.smtp.socketFactory.port", PORT);
+			properties.put("mail.smtp.starttls.enable", TLS_ENABLE);
+		    properties.put("mail.smtp.socketFactory.class",SSL_FACTORY);
+		    properties.put("mail.smtp.socketFactory.fallback", FALLBACK);
 
 			final Session session = Session.getDefaultInstance(properties, new Authenticator() {
 				@Override
 				protected PasswordAuthentication getPasswordAuthentication() {
 					   return new PasswordAuthentication(from, PASSWORD);
 				}
-		    });
+					    });
 
 		    try {
 		    	final MimeMessage message = new MimeMessage(session);
