@@ -15,15 +15,15 @@ Repository GIT
 https://github.com/giocos/healt-booking
 
 
-Credenzials
+Credentials
 -----------
-Amministratore
+Amministratore (Admin)
 
 * username: admin1 password: 1234
 
 * username: admin2 password: 1234
 
-Impiegato
+Impiegato (Employee)
 
 * username: employee1 password: 1234
 
@@ -31,9 +31,9 @@ Impiegato
 
 NOTE 
 ----
-Il progetto è stato testato ed eseguito utilizzando il browser Mozilla Firefox.
+The project was deployed and tested with using Mozilla Firefox Browser.
 
 AUTHORS
 -------
-Giovanni Cosentino - https://github.com/giocos  
 Davide Aloia - https://github.com/playa92
+Giovanni Cosentino - https://github.com/giocos  
