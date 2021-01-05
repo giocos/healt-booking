@@ -10,7 +10,7 @@ Software utilizzati
 
 Repository GIT
 --------------
-https://github.com/playa92/PrenotazioneVisitaMedica
+https://github.com/giocos/healt-booking
 
 
 Credenziali di accesso al sito
@@ -29,7 +29,7 @@ Impiegato
 
 NOTE 
 ----
-Il progetto è stato testato ed eseguito utilizzando il browser Mozilla Firefox.
+Il progetto Ã¨ stato testato ed eseguito utilizzando il browser Mozilla Firefox.
 
 AUTORI
 ------
