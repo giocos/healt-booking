@@ -36,4 +36,5 @@ The project was deployed and tested with using Mozilla Firefox Browser.
 AUTHORS
 -------
 Davide Aloia - https://github.com/playa92
+
 Giovanni Cosentino - https://github.com/giocos  
