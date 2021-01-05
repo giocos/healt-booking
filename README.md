@@ -4,9 +4,11 @@ Used Software
 -------------
 1. Eclipse Oxygen Java EE | Download: https://www.eclipse.org/downloads/eclipse-packages
 
-2. Apache Tomcat V9.0.2 | Download: https://tomcat.apache.org/download-90.cgi
+2. Apache Tomcat 9.0.2 | Download: https://tomcat.apache.org/download-90.cgi
 
-3. pgAdmin3 LTS | Download: https://www.openscg.com/bigsql/pgadmin3
+3. PgAdmin3 LTS | Download: https://www.openscg.com/bigsql/pgadmin3
+
+4. Java JDK 1.8 | Download: https://www.java.com/it/download/
 
 Repository GIT
 --------------
