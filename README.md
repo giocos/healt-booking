@@ -1,6 +1,6 @@
-# PrenotazioneVisitaMedica
+# Healt-Booking
 
-Software utilizzati
+Used Software
 -------------------
 1. Eclipse Oxygen Java EE | Download: https://www.eclipse.org/downloads/eclipse-packages
 
@@ -13,7 +13,7 @@ Repository GIT
 https://github.com/giocos/healt-booking
 
 
-Credenziali di accesso al sito
+Credenzials
 ------------------------------
 Amministratore
 
@@ -31,7 +31,7 @@ NOTE
 ----
 Il progetto è stato testato ed eseguito utilizzando il browser Mozilla Firefox.
 
-AUTORI
+AUTHORS
 ------
 Giovanni Cosentino - https://github.com/giocos  
 Davide Aloia - https://github.com/playa92
