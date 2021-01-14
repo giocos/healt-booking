@@ -1,19 +1,18 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import buffer.BufferFactory;
+import entity.Impiegato;
+import jdbc.DatabaseManager;
+import org.json.JSONException;
+import org.json.JSONObject;
+import repository.ImpiegatoDao;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import buffer.BufferFactory;
-import org.json.JSONException;
-import org.json.JSONObject;
-import entity.Impiegato;
-import factory.DataBaseManager;
-import repository.ImpiegatoDao;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 @SuppressWarnings("serial")
 public class RipristinoPassword extends HttpServlet {
@@ -40,7 +39,7 @@ public class RipristinoPassword extends HttpServlet {
 			final String username = json.getString("username");
 			final String newPassword = json.getString("password");
 
-			final ImpiegatoDao impiegatoDao = DataBaseManager.getInstance().getDaoFactory().getImpiegatoDao();
+			final ImpiegatoDao impiegatoDao = DatabaseManager.getInstance().getDaoFactory().getImpiegatoDao();
 			final Impiegato impiegato = impiegatoDao.findByPrimaryKey(username);
 				
 			if (impiegato != null) {

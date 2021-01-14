@@ -1,8 +1,9 @@
 package repository;
 
-import java.util.List;
 import entity.Paziente;
 import exception.PersistenceException;
+
+import java.util.List;
 
 public interface UniversitaDao {
 

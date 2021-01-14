@@ -1,16 +1,17 @@
 package controller;
 
-import java.io.IOException;
-import java.util.List;
+import entity.Logging;
+import jdbc.DatabaseManager;
+import repository.LoggingDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import entity.Logging;
-import factory.DataBaseManager;
-import repository.LoggingDao;
+import java.io.IOException;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class ControlloAccessi extends HttpServlet {
@@ -20,7 +21,7 @@ public class ControlloAccessi extends HttpServlet {
 		final HttpSession session = request.getSession();
 		if (session.getAttribute("loggatoAdmin") != null) {
 			if (session.getAttribute("loggatoAdmin").equals(true)) {
-				final LoggingDao loggingDao = DataBaseManager.getInstance().getDaoFactory().getLoggingDao();
+				final LoggingDao loggingDao = DatabaseManager.getInstance().getDaoFactory().getLoggingDao();
 				final List<Logging> logs = loggingDao.findAll();
 				
 				if (logs.size() > 0) {

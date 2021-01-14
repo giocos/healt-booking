@@ -1,21 +1,21 @@
 package controller;
 
-import java.io.*;
-import java.util.*;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
-
 import buffer.BufferFactory;
+import entity.Email;
+import jdbc.DatabaseManager;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import entity.Email;
-import factory.DataBaseManager;
 import repository.EmailDao;
 
 import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Properties;
 
 import static controller.constants.EmailProperty.*;
 
@@ -81,7 +81,7 @@ public class InviaEmail extends HttpServlet {
 		   }
 
            final String admin = request.getSession().getAttribute("username").toString();
-           final EmailDao emailDao = DataBaseManager.getInstance().getDaoFactory().getEmailDao();
+           final EmailDao emailDao = DatabaseManager.getInstance().getDaoFactory().getEmailDao();
            final Email email = new Email();
 		   email.setAdmin(admin);
 		   email.setMessaggio(body);

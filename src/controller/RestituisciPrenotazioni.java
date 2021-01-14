@@ -1,22 +1,23 @@
 package controller;
 
-import java.io.IOException;
-import java.util.List;
+import entity.Prenotazione;
+import jdbc.DatabaseManager;
+import repository.PrenotazioneDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import entity.Prenotazione;
-import factory.DataBaseManager;
-import repository.PrenotazioneDao;
+import java.io.IOException;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class RestituisciPrenotazioni extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		final PrenotazioneDao prenotazioneDao = DataBaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
+		final PrenotazioneDao prenotazioneDao = DatabaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
 		final List<Prenotazione> prenotazioni = prenotazioneDao.findAll();
 		
 		if (prenotazioni.size() > 0) {

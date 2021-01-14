@@ -1,19 +1,19 @@
 package controller;
 
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
+import entity.CodiceQR;
+import entity.Prenotazione;
+import jdbc.DatabaseManager;
+import repository.CodiceQRDao;
+import repository.PrenotazioneDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import entity.CodiceQR;
-import entity.Prenotazione;
-import factory.DataBaseManager;
-import repository.CodiceQRDao;
-import repository.PrenotazioneDao;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 @SuppressWarnings("serial")
 public class CercaPrenotazione extends HttpServlet {
@@ -28,8 +28,8 @@ public class CercaPrenotazione extends HttpServlet {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 		
 		final String hexcode = request.getParameter("hexcode");
-		final CodiceQRDao codiceQRDao = DataBaseManager.getInstance().getDaoFactory().getCodiceQRDao();
-		final PrenotazioneDao prenotazioneDao = DataBaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
+		final CodiceQRDao codiceQRDao = DatabaseManager.getInstance().getDaoFactory().getCodiceQRDao();
+		final PrenotazioneDao prenotazioneDao = DatabaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
 		final CodiceQR codiceQR = codiceQRDao.findByPrimaryKey(hexcode);
 		
 		if (codiceQR != null) {

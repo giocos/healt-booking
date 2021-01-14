@@ -1,21 +1,21 @@
 package controller;
 
-import java.io.IOException;
-import java.util.List;
+import entity.Amministratore;
+import entity.Impiegato;
+import entity.Segnalazione;
+import jdbc.DatabaseManager;
+import repository.AmministratoreDao;
+import repository.ImpiegatoDao;
+import repository.SegnalazioneDao;
+import utility.LoggingUtil;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import common.LoggingUtil;
-import entity.Amministratore;
-import entity.Impiegato;
-import entity.Segnalazione;
-import factory.DataBaseManager;
-import repository.AmministratoreDao;
-import repository.ImpiegatoDao;
-import repository.SegnalazioneDao;
+import java.io.IOException;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Login extends HttpServlet {
@@ -34,11 +34,11 @@ public class Login extends HttpServlet {
 		
 		final String username = request.getParameter("username");
 		final String password = request.getParameter("password");
-		final AmministratoreDao amministratoreDao = DataBaseManager.getInstance().getDaoFactory().getAmministratoreDao();
+		final AmministratoreDao amministratoreDao = DatabaseManager.getInstance().getDaoFactory().getAmministratoreDao();
 		final Amministratore amministratore = amministratoreDao.findByPrimaryKey(username);
 	
 		if (amministratore == null) {
-			final ImpiegatoDao impiegatoDao = DataBaseManager.getInstance().getDaoFactory().getImpiegatoDao();
+			final ImpiegatoDao impiegatoDao = DatabaseManager.getInstance().getDaoFactory().getImpiegatoDao();
 			final Impiegato impiegato = impiegatoDao.findByPrimaryKey(username);
 		
 			if (impiegato == null) {
@@ -84,7 +84,7 @@ public class Login extends HttpServlet {
 	}
 
 	private int contaSegnalazioni() {
-		final SegnalazioneDao dao = DataBaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
+		final SegnalazioneDao dao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
 		final List<Segnalazione> segnalazioni = dao.findAll();
 
 		return (int) segnalazioni.stream().filter(s -> !s.getRisolto()).count();

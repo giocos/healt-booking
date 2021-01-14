@@ -1,18 +1,17 @@
 package jdbc;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import entity.Amministratore;
 import entity.Impiegato;
 import entity.Paziente;
-import factory.DaoFactory;
 import exception.PersistenceException;
-import factory.DataBaseManager;
-import repository.UtilDao;
 import repository.AmministratoreDao;
 import repository.ImpiegatoDao;
 import repository.UniversitaDao;
+import repository.UtilDao;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class MainJDBC {
 
@@ -41,7 +40,7 @@ public class MainJDBC {
 	}
 	
 	public static void main(String[] args) throws PersistenceException, IOException {
-		final DaoFactory factory = DataBaseManager.getInstance().getDaoFactory();
+		final DaoFactory connection = DatabaseManager.getInstance().getDaoFactory();
 		final UtilDao utilDao = factory.getUtilDao();
 		utilDao.dropDatabase();
 		utilDao.createDatabase();

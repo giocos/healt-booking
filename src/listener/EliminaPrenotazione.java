@@ -1,18 +1,18 @@
 package listener;
 
+import entity.CodiceQR;
+import entity.Paziente;
+import entity.Prenotazione;
+import jdbc.DaoFactory;
+import jdbc.DatabaseManager;
+import repository.CodiceQRDao;
+import repository.PazienteDao;
+import repository.PrenotazioneDao;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-
-import entity.CodiceQR;
-import entity.Paziente;
-import entity.Prenotazione;
-import factory.DaoFactory;
-import factory.DataBaseManager;
-import repository.CodiceQRDao;
-import repository.PazienteDao;
-import repository.PrenotazioneDao;
 
 public class EliminaPrenotazione implements Runnable {
 
@@ -21,7 +21,7 @@ public class EliminaPrenotazione implements Runnable {
 	private final DaoFactory factory;
 
 	protected EliminaPrenotazione() {
-		factory = DataBaseManager.getInstance().getDaoFactory();
+		factory = DatabaseManager.getInstance().getDaoFactory();
 	}
 
 	@Override

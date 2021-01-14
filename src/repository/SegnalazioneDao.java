@@ -1,9 +1,9 @@
 package repository;
 
-import java.util.List;
-
 import entity.Segnalazione;
 import exception.PersistenceException;
+
+import java.util.List;
 
 public interface SegnalazioneDao {
 

@@ -1,7 +1,7 @@
 package listener;
 
 import exception.PersistenceException;
-import factory.DataBaseManager;
+import jdbc.DatabaseManager;
 import repository.impl.UtilDao;
 
 public class ResetPrenotazioni implements Runnable {
@@ -13,7 +13,7 @@ public class ResetPrenotazioni implements Runnable {
 	@Override
 	public void run() {
 		try {
-			dao = DataBaseManager.getInstance().getDaoFactory().getUtilDao();
+			dao = DatabaseManager.getInstance().getDaoFactory().getUtilDao();
 			dao.resetPrenotazioni();
 
 		} catch (final PersistenceException e) {

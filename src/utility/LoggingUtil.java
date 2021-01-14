@@ -1,7 +1,7 @@
-package common;
+package utility;
 
 import entity.Logging;
-import factory.DataBaseManager;
+import jdbc.DatabaseManager;
 import repository.LoggingDao;
 
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ public final class LoggingUtil {
     protected LoggingUtil() {}
 
     public static void registraAccesso(String username, String azione) {
-        final LoggingDao loggingDao = DataBaseManager.getInstance().getDaoFactory().getLoggingDao();
+        final LoggingDao loggingDao = DatabaseManager.getInstance().getDaoFactory().getLoggingDao();
         final Logging logging = new Logging();
         logging.setAzione(azione);
         Date date = new Date();

@@ -1,16 +1,17 @@
 package controller;
 
-import java.io.IOException;
-import java.util.List;
+import entity.Segnalazione;
+import jdbc.DatabaseManager;
+import repository.SegnalazioneDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import entity.Segnalazione;
-import factory.DataBaseManager;
-import repository.SegnalazioneDao;
+import java.io.IOException;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Home extends HttpServlet {
@@ -53,7 +54,7 @@ public class Home extends HttpServlet {
 	}
 	
 	private int contaSegnalazioni() {
-		final SegnalazioneDao dao = DataBaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
+		final SegnalazioneDao dao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
 		final List<Segnalazione> segnalazioni = dao.findAll();
 
 		return (int) segnalazioni.stream().filter(s -> !s.getRisolto()).count();

@@ -1,21 +1,18 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-//import java.util.List;
-//import javax.servlet.RequestDispatcher;
+import buffer.BufferFactory;
+import entity.Segnalazione;
+import jdbc.DatabaseManager;
+import org.json.JSONException;
+import org.json.JSONObject;
+import repository.SegnalazioneDao;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import buffer.BufferFactory;
-import org.json.JSONException;
-import org.json.JSONObject;
-import entity.Segnalazione;
-import factory.DataBaseManager;
-import repository.SegnalazioneDao;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 @SuppressWarnings("serial")
 public class EffettuaSegnalazione extends HttpServlet {
@@ -48,7 +45,7 @@ public class EffettuaSegnalazione extends HttpServlet {
 			final String motivazione = json.getString("motivazione");
 			final String commento = json.getString("commento");
 
-			final SegnalazioneDao segnalazioneDao = DataBaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
+			final SegnalazioneDao segnalazioneDao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
 			final Segnalazione segnalazione = new Segnalazione();
 			segnalazione.setId(segnalazioneDao.getId() + 1);
 			segnalazione.setEmail(email);

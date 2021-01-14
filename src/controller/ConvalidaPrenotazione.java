@@ -1,15 +1,16 @@
 package controller;
 
-import java.io.IOException;
+import entity.CodiceQR;
+import jdbc.DatabaseManager;
+import repository.CodiceQRDao;
+import repository.PrenotazioneDao;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import entity.CodiceQR;
-import factory.DataBaseManager;
-import repository.CodiceQRDao;
-import repository.PrenotazioneDao;
+import java.io.IOException;
 
 @SuppressWarnings("serial")
 public class ConvalidaPrenotazione extends HttpServlet {
@@ -20,10 +21,10 @@ public class ConvalidaPrenotazione extends HttpServlet {
 		if (session.getAttribute("loggato") != null) {
 			if (session.getAttribute("loggato").equals(true)) {
 				final String hexcode = request.getParameter("hexcode");
-				final CodiceQRDao codiceQRDao = DataBaseManager.getInstance().getDaoFactory().getCodiceQRDao();
+				final CodiceQRDao codiceQRDao = DatabaseManager.getInstance().getDaoFactory().getCodiceQRDao();
 
 				final CodiceQR codiceQR = codiceQRDao.findByPrimaryKey(hexcode);
-				final PrenotazioneDao prenotazioneDao = DataBaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
+				final PrenotazioneDao prenotazioneDao = DatabaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
 				
 				if (codiceQR == null) {
 					response.getWriter().write("Non &egrave; stata trovata alcuna prenotazione con il codice: " + hexcode);

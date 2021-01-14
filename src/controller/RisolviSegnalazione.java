@@ -1,23 +1,21 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
+import buffer.BufferFactory;
+import entity.Segnalazione;
+import jdbc.DatabaseManager;
+import org.json.JSONException;
+import org.json.JSONObject;
+import repository.SegnalazioneDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import buffer.BufferFactory;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import entity.Segnalazione;
-import factory.DataBaseManager;
-import repository.SegnalazioneDao;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class RisolviSegnalazione extends HttpServlet {
@@ -71,7 +69,7 @@ public class RisolviSegnalazione extends HttpServlet {
 	}
 	
 	private List<Segnalazione> risolviSegnalazione(String id, String risposta) {
-		final SegnalazioneDao segnalazioneDao = DataBaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
+		final SegnalazioneDao segnalazioneDao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
 		final List<Segnalazione> segnalazioni = segnalazioneDao.findAll();
 		  
 		if (!id.equals("")) {

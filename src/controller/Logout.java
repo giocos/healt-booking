@@ -1,14 +1,13 @@
 package controller;
 
-import java.io.IOException;
+import utility.LoggingUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import common.LoggingUtil;
+import java.io.IOException;
 
 @SuppressWarnings("serial")
 public class Logout extends HttpServlet {

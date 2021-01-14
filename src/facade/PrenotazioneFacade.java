@@ -4,7 +4,7 @@ import buffer.BufferFactory;
 import entity.CodiceQR;
 import entity.Paziente;
 import entity.Prenotazione;
-import factory.DataBaseManager;
+import jdbc.DatabaseManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import repository.CodiceQRDao;
@@ -15,7 +15,6 @@ import repository.UniversitaDao;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -55,7 +54,7 @@ public class PrenotazioneFacade {
         final Calendar now = setTimeToCalendar(dateFormat, currentTime);
         now.set(Calendar.MINUTE, now.get(Calendar.MINUTE) + TEMPO_EFFETTIVO);
 
-        final PrenotazioneDao prenotazioneDao = DataBaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
+        final PrenotazioneDao prenotazioneDao = DatabaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
         final int visiteTotali = prenotazioneDao.getTotalVisits();
 
         final Date current = new Date(now.getTimeInMillis() + (visiteTotali * TEMPO_VISITA * 60000));
@@ -88,10 +87,10 @@ public class PrenotazioneFacade {
 
             final JSONObject json = new JSONObject(jsonReceived.toString());
 
-            final PazienteDao pazienteDao = DataBaseManager.getInstance().getDaoFactory().getPazienteDao();
-            final PrenotazioneDao prenotazioneDao = DataBaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
-            final CodiceQRDao codiceQRDao = DataBaseManager.getInstance().getDaoFactory().getCodiceQRDao();
-            final UniversitaDao universitaDao = DataBaseManager.getInstance().getDaoFactory().getUniversitaDao();
+            final PazienteDao pazienteDao = DatabaseManager.getInstance().getDaoFactory().getPazienteDao();
+            final PrenotazioneDao prenotazioneDao = DatabaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
+            final CodiceQRDao codiceQRDao = DatabaseManager.getInstance().getDaoFactory().getCodiceQRDao();
+            final UniversitaDao universitaDao = DatabaseManager.getInstance().getDaoFactory().getUniversitaDao();
 
             Long matricola = null;
             if (!json.getString("matricola").equals("")) {
