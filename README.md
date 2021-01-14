@@ -29,11 +29,11 @@ Impiegato (Employee)
 
 * username: employee2 password: 1234 
 
-NOTE 
+Note 
 ----
 The project was deployed and tested with using Mozilla Firefox Browser.
 
-AUTHORS
+Authors
 -------
 Davide Aloia - https://github.com/playa92
 
