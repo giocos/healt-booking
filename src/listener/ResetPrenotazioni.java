@@ -2,7 +2,7 @@ package listener;
 
 import exception.PersistenceException;
 import jdbc.DatabaseManager;
-import repository.impl.UtilDao;
+import repository.UtilDao;
 
 public class ResetPrenotazioni implements Runnable {
 	

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>Prenotazione Visita Medica</display-name>
+
   <welcome-file-list>
     <welcome-file>home.html</welcome-file>
     <welcome-file>home.htm</welcome-file>
@@ -8,14 +9,30 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+
   <servlet>
-    <servlet-name>Home</servlet-name>
-    <servlet-class>controller.Home</servlet-class>
+    <servlet-name>CercaPrenotazione</servlet-name>
+    <servlet-class>controller.CercaPrenotazione</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Home</servlet-name>
-    <url-pattern>/home</url-pattern>
-    <url-pattern/>
+    <servlet-name>CercaPrenotazione</servlet-name>
+    <url-pattern>/cercaPrenotazione</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ControlloAccessi</servlet-name>
+    <servlet-class>controller.ControlloAccessi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControlloAccessi</servlet-name>
+    <url-pattern>/controlloAccessi</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ConvalidaPrenotazione</servlet-name>
+    <servlet-class>controller.ConvalidaPrenotazione</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConvalidaPrenotazione</servlet-name>
+    <url-pattern>/convalidaPrenotazione</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>EffettuaPrenotazione</servlet-name>
@@ -24,6 +41,31 @@
   <servlet-mapping>
     <servlet-name>EffettuaPrenotazione</servlet-name>
     <url-pattern>/effettuaPrenotazione</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EffettuaSegnalazione</servlet-name>
+    <servlet-class>controller.EffettuaSegnalazione</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EffettuaSegnalazione</servlet-name>
+    <url-pattern>/effettuaSegnalazione</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EliminaAccessi</servlet-name>
+    <servlet-class>controller.EliminaAccessi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EliminaAccessi</servlet-name>
+    <url-pattern>/eliminaAccessi</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Home</servlet-name>
+    <servlet-class>controller.Home</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Home</servlet-name>
+    <url-pattern>/home</url-pattern>
+    <url-pattern/>
   </servlet-mapping>
   <servlet>
     <servlet-name>Login</servlet-name>
@@ -42,20 +84,12 @@
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>CercaPrenotazione</servlet-name>
-    <servlet-class>controller.CercaPrenotazione</servlet-class>
+    <servlet-name>NascondiSegnalazioni</servlet-name>
+    <servlet-class>controller.NascondiSegnalazioni</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CercaPrenotazione</servlet-name>
-    <url-pattern>/cercaPrenotazione</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>EffettuaSegnalazione</servlet-name>
-    <servlet-class>controller.EffettuaSegnalazione</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EffettuaSegnalazione</servlet-name>
-    <url-pattern>/effettuaSegnalazione</url-pattern>
+    <servlet-name>NascondiSegnalazioni</servlet-name>
+    <url-pattern>/update</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>RestituisciPrenotazioni</servlet-name>
@@ -89,36 +123,5 @@
     <servlet-name>RipristinoPassword</servlet-name>
     <url-pattern>/ripristinoPassword</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>ConvalidaPrenotazione</servlet-name>
-    <servlet-class>controller.ConvalidaPrenotazione</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ConvalidaPrenotazione</servlet-name>
-    <url-pattern>/convalidaPrenotazione</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>NascondiSegnalazioni</servlet-name>
-    <servlet-class>controller.NascondiSegnalazioni</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>NascondiSegnalazioni</servlet-name>
-    <url-pattern>/update</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ControlloAccessi</servlet-name>
-    <servlet-class>controller.ControlloAccessi</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ControlloAccessi</servlet-name>
-    <url-pattern>/controlloAccessi</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>EliminaAccessi</servlet-name>
-    <servlet-class>controller.EliminaAccessi</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EliminaAccessi</servlet-name>
-    <url-pattern>/eliminaAccessi</url-pattern>
-  </servlet-mapping>
+
 </web-app>

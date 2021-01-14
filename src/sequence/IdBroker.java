@@ -7,11 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-//assegna in modo progressivo un id per ogni tabella presente nel nostro DB
 public final class IdBroker {
 
 	private static final String SELECT = "SELECT nextval('sequence_id') AS id";
-
+	
 	public static synchronized Long getId(Connection connection) throws PersistenceException {
 		Long id = null;
 		try {
