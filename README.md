@@ -31,7 +31,7 @@ Impiegato (Employee)
 
 Note 
 ----
-The project was deployed and tested with using Mozilla Firefox Browser.
+The project was developed and tested with using Mozilla Firefox Browser.
 
 Authors
 -------
