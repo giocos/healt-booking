@@ -20,10 +20,10 @@ public class AmministratoreDaoImpl implements AmministratoreDao {
 	
 	@Override
 	public void save(Amministratore amministratore) {
-		final Connection connection = dataSource.getConnection();
+		Connection connection = dataSource.getConnection();
 		try {
-			final String insert = "INSERT INTO amministratore(username, password) VALUES (?,?)";
-			final PreparedStatement statement = connection.prepareStatement(insert);
+			String insert = "INSERT INTO amministratore(username, password) VALUES (?,?)";
+			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setString(1, amministratore.getUsername());
 			statement.setString(2, amministratore.getPassword());
 			statement.executeUpdate();

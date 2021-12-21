@@ -3,11 +3,13 @@ package entity;
 import java.io.Serializable;
 
 public class Email implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
-	public String admin;
-	public String messaggio;
-	public String emittente;
-	public String destinatario;
+	private String admin;
+	private String messaggio;
+	private String emittente;
+	private String destinatario;
 	
 	public Email() {}
 	

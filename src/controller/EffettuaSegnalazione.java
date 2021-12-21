@@ -35,7 +35,6 @@ public class EffettuaSegnalazione extends HttpServlet {
 		
 		try {
 			final JSONObject json = new JSONObject(jsonReceived.toString());
-
 			String email = "Nessuna";
 			if (!json.getString("email").equals("")) {
 				 email = json.getString("email");

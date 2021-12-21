@@ -22,9 +22,9 @@ public class PrenotazioneDaoImpl implements PrenotazioneDao {
 	
 	@Override
 	public void save(Prenotazione prenotazione) {
-		final Connection connection = dataSource.getConnection();
+		Connection connection = dataSource.getConnection();
 		try {
-			final String insert = "INSERT INTO prenotazione(id_prenotazione, nome_paziente, cognome_paziente, orario_visita, importo) VALUES (?,?,?,?,?)";
+			String insert = "INSERT INTO prenotazione(id_prenotazione, nome_paziente, cognome_paziente, orario_visita, importo) VALUES (?,?,?,?,?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setString(1, prenotazione.getCodiceVisita());
 			statement.setString(2, prenotazione.getNomePaziente());
@@ -47,13 +47,13 @@ public class PrenotazioneDaoImpl implements PrenotazioneDao {
 	@Override
 	public Prenotazione findByPrimaryKey(String codice) {
 		Prenotazione prenotazione = null;
-		final Connection connection = dataSource.getConnection();
+		Connection connection = dataSource.getConnection();
 		try {
 			PreparedStatement statement;
-			final String find = "SELECT * FROM prenotazione WHERE id_prenotazione = ?";
+			String find = "SELECT * FROM prenotazione WHERE id_prenotazione = ?";
 			statement = connection.prepareStatement(find);
 			statement.setString(1, codice);
-			final ResultSet result = statement.executeQuery();
+			ResultSet result = statement.executeQuery();
 			
 			if (result.next()) {
 				prenotazione = new Prenotazione();
@@ -86,7 +86,7 @@ public class PrenotazioneDaoImpl implements PrenotazioneDao {
 			final PreparedStatement statement = connection.prepareStatement(find);
 			final ResultSet result = statement.executeQuery();
 			
-			while(result.next()) {
+			while (result.next()) {
 				prenotazione = new Prenotazione();
 				prenotazione.setCodiceVisita(result.getString(1));
 				prenotazione.setNomePaziente(result.getString(2));
@@ -142,13 +142,13 @@ public class PrenotazioneDaoImpl implements PrenotazioneDao {
 			statement.setString(1, prenotazione.getCodiceVisita());
 			statement.executeUpdate();	
 			
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new PersistenceException(e.getMessage());
 		} finally {
 			
 			try {
 				connection.close();
-			} catch(SQLException e) {
+			} catch (SQLException e) {
 				throw new PersistenceException(e.getMessage());
 			}
 		}	

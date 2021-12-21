@@ -7,7 +7,7 @@ import repository.impl.*;
 
 public class PostgresDaoFactory extends DaoFactory {
 
-	private static final String URI = "jdbc:postgresql://localhost:5432/Prenotazione";
+	private static final String URI = "jdbc:postgresql://localhost:5432/Prenotazioni";
 	private static final String USERNAME = "postgres";
 	private static final String PASSWORD = "postgres";
 
@@ -25,17 +25,27 @@ public class PostgresDaoFactory extends DaoFactory {
 	}
 
 	@Override
-	public PazienteDao getPazienteDao() { return new PazienteDaoImpl(dataSource); }
-	
-	@Override
 	public AmministratoreDao getAmministratoreDao() {
 		return new AmministratoreDaoImpl(dataSource);
 	}
 
 	@Override
-	public UniversitaDao getUniversitaDao() {
-		return new UniversitaDaoImpl(dataSource);
+	public PrenotazioneDao getPrenotazioneDao() {
+		return new PrenotazioneDaoImpl(dataSource);
 	}
+
+	@Override
+	public SegnalazioneDao getSegnalazioneDao() {
+		return new SegnalazioneDaoImpl(dataSource);
+	}
+
+	@Override
+	public ImpiegatoDao getImpiegatoDao() {
+		return new ImpiegatoDaoImpl(dataSource);
+	}
+
+	@Override
+	public PazienteDao getPazienteDao() { return new PazienteDaoImpl(dataSource); }
 
 	@Override
 	public CodiceQRDao getCodiceQRDao() {
@@ -43,30 +53,20 @@ public class PostgresDaoFactory extends DaoFactory {
 	}
 
 	@Override
-	public PrenotazioneDao getPrenotazioneDao() {
-		return new PrenotazioneDaoImpl(dataSource);
-	}
-	
-	@Override
-	public ImpiegatoDao getImpiegatoDao() {
-		return new ImpiegatoDaoImpl(dataSource);
-	}
-	
-	@Override
-	public SegnalazioneDao getSegnalazioneDao() {
-		return new SegnalazioneDaoImpl(dataSource);
-	}
-	
-	@Override
 	public LoggingDao getLoggingDao() {
 		return new LoggingDaoImpl(dataSource);
 	}
-	
+
+	@Override
+	public AteneoDao getAteneoDao() {
+		return new AteneoDaoImpl(dataSource);
+	}
+
 	@Override
 	public EmailDao getEmailDao() {
 		return new EmailDaoImpl(dataSource);
 	}
-	
+
 	@Override
 	public UtilDao getUtilDao() {
 		return new UtilDaoImpl(dataSource);

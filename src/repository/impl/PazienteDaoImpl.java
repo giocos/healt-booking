@@ -19,14 +19,14 @@ public class PazienteDaoImpl implements PazienteDao {
 
 	@Override
 	public void save(Paziente paziente) {
-		final Connection connection = dataSource.getConnection();
+		Connection connection = dataSource.getConnection();
 		try {
-			final String insert = "INSERT INTO paziente(codice_fiscale, nome, cognome, matricola, invalidità, id_codice) VALUES (?,?,?,?,?,?)";
-			final PreparedStatement statement = connection.prepareStatement(insert);
+			String insert = "INSERT INTO paziente(codice_fiscale, nome, cognome, matricola, invalidità, id_codice) VALUES (?,?,?,?,?,?)";
+			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setString(1, paziente.getCodiceFiscale());
 			statement.setString(2, paziente.getNome());
 			statement.setString(3, paziente.getCognome());
-			if(paziente.getMatricola() != null) {
+			if (paziente.getMatricola() != null) {
 				statement.setLong(4, paziente.getMatricola());
 			} else {
 				statement.setNull(4, Types.BIGINT);
@@ -201,7 +201,7 @@ public class PazienteDaoImpl implements PazienteDao {
 			statement.setLong(1, matricola);
 			final ResultSet result = statement.executeQuery();
 			
-			if(result.next()) {
+			if (result.next()) {
 				return true;
 			}
 

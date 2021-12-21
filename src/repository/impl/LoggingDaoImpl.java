@@ -76,7 +76,7 @@ public class LoggingDaoImpl implements LoggingDao {
 			final PreparedStatement statement = connection.prepareStatement(find);
 			final ResultSet result = statement.executeQuery();
 			
-			while(result.next()) {
+			while (result.next()) {
 				logging = new Logging();
 				logging.setId(result.getInt("id"));
 				logging.setAzione(result.getString("azione"));

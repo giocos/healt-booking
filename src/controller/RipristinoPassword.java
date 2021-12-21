@@ -28,20 +28,17 @@ public class RipristinoPassword extends HttpServlet {
 		final BufferedReader reader = BufferFactory.getBufferReader(request.getInputStream());
 		String line = reader.readLine();
 		
-		while(line != null) {
+		while (line != null) {
 			jsonReceived.append(line);
 			line = reader.readLine();
 		}		
 		
 		try {
 			final JSONObject json = new JSONObject(jsonReceived.toString());
-
 			final String username = json.getString("username");
 			final String newPassword = json.getString("password");
-
 			final ImpiegatoDao impiegatoDao = DatabaseManager.getInstance().getDaoFactory().getImpiegatoDao();
 			final Impiegato impiegato = impiegatoDao.findByPrimaryKey(username);
-				
 			if (impiegato != null) {
 				impiegato.setPassword(newPassword);
 				impiegatoDao.update(impiegato);

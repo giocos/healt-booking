@@ -14,11 +14,11 @@ public final class LoggingUtil {
     protected LoggingUtil() {}
 
     public static void registraAccesso(String username, String azione) {
-        final LoggingDao loggingDao = DatabaseManager.getInstance().getDaoFactory().getLoggingDao();
-        final Logging logging = new Logging();
+        LoggingDao loggingDao = DatabaseManager.getInstance().getDaoFactory().getLoggingDao();
+        Logging logging = new Logging();
         logging.setAzione(azione);
         Date date = new Date();
-        int id = loggingDao.getId() + 1;//generate PK
+        int id = loggingDao.getId() + 1;// generate PK
         logging.setId(id);
         logging.setData(date);
         logging.setOrario(new SimpleDateFormat(FORMAT).format(date));

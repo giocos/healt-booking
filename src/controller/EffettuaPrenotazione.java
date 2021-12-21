@@ -16,10 +16,9 @@ public class EffettuaPrenotazione extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
-
-		final PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
 		try {
-			final String risposta = PrenotazioneFacade.getInstance().checkPrenotazione();
+			String risposta = PrenotazioneFacade.getInstance().checkPrenotazione();
 			out.println(risposta);
 
 		} finally {
@@ -31,10 +30,9 @@ public class EffettuaPrenotazione extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException ,IOException {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
-
-		final PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
 		try {
-			final String risposta = PrenotazioneFacade.getInstance()
+			String risposta = PrenotazioneFacade.getInstance()
 					.effettuaPrenotazione(request.getInputStream());
 			out.println(risposta);
 

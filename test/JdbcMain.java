@@ -6,7 +6,7 @@ import jdbc.DaoFactory;
 import jdbc.DatabaseManager;
 import repository.AmministratoreDao;
 import repository.ImpiegatoDao;
-import repository.UniversitaDao;
+import repository.AteneoDao;
 import repository.UtilDao;
 
 import java.io.BufferedReader;
@@ -18,15 +18,14 @@ public class JdbcMain {
 	protected static String[] readCredential() throws IOException {
 		FileReader file = null;
 		BufferedReader buffer = null;
-		final String[] credentials = new String[4];
+		String[] credentials = new String[4];
 		try {
 			file = new FileReader("../resources/credenziali.txt");
 			buffer = new BufferedReader(file);
 			String line = buffer.readLine();
 			int i = 0;
-			
 			while (line != null) {
-				if(!line.matches("^[A-Z]+:$")) {
+				if (!line.matches("^[A-Z]+:$")) {
 					credentials[i++] = line;
 				}
 				line = buffer.readLine();
@@ -40,18 +39,17 @@ public class JdbcMain {
 	}
 	
 	public static void main(String[] args) throws PersistenceException, IOException {
-		final DaoFactory factory = DatabaseManager.getInstance().getDaoFactory();
-		final UtilDao utilDao = factory.getUtilDao();
+		DaoFactory factory = DatabaseManager.getInstance().getDaoFactory();
+		UtilDao utilDao = factory.getUtilDao();
 		utilDao.dropDatabase();
 		utilDao.createDatabase();
 		
-		final ImpiegatoDao impiegatoDao = factory.getImpiegatoDao();
-		final AmministratoreDao amministratoreDao = factory.getAmministratoreDao();
+		ImpiegatoDao impiegatoDao = factory.getImpiegatoDao();
+		AmministratoreDao amministratoreDao = factory.getAmministratoreDao();
 		
 		// CREAZIONE AMMINISTRATORI & IMPIEGATI
 		int count = 0;
-		final String[] ruoli = {"sportello", "sistema"};
-		
+		String[] ruoli = {"sportello", "sistema"};
 		for (final String it : JdbcMain.readCredential()) {
 			final String[] curr = it.split(":");
 			if (count < 2) {
@@ -68,43 +66,42 @@ public class JdbcMain {
 			}
 			count ++;
 		}
-		
 		// CREAZIONE PAZIENTI & UNIVERSITARI
-		final UniversitaDao universitaDao = factory.getUniversitaDao();
-		final Paziente p1 = new Paziente();
-		p1.setCodiceFiscale("CSNGNN94S27H579E");
-		p1.setNome("Giovanni");
-		p1.setCognome("Cosentino");
-		p1.setMatricola(new Long(161782));
+		AteneoDao ateneoDao = factory.getAteneoDao();
+		Paziente paziente1 = new Paziente();
+		paziente1.setCodiceFiscale("CSNGNN94S27H579E");
+		paziente1.setNome("Giovanni");
+		paziente1.setCognome("Cosentino");
+		paziente1.setMatricola(new Long(161782));
 
-		final Paziente p2 = new Paziente();
-		p2.setCodiceFiscale("LAODVD92S07Z112K");
-		p2.setNome("Davide");
-		p2.setCognome("Aloia");
-		p2.setMatricola(new Long(164889));
+		Paziente paziente2 = new Paziente();
+		paziente2.setCodiceFiscale("LAODVD92S07Z112K");
+		paziente2.setNome("Davide");
+		paziente2.setCognome("Aloia");
+		paziente2.setMatricola(new Long(164889));
 
-		final Paziente p3 = new Paziente();
-		p3.setCodiceFiscale("CNGMHL95H01G317R");
-		p3.setNome("Michele");
-		p3.setCognome("Cangeri");
-		p3.setMatricola(new Long(176543));
+		Paziente paziente3 = new Paziente();
+		paziente3.setCodiceFiscale("CNGMHL95H01G317R");
+		paziente3.setNome("Michele");
+		paziente3.setCognome("Cangeri");
+		paziente3.setMatricola(new Long(176543));
 
-		final Paziente p4 = new Paziente();
-		p4.setCodiceFiscale("RSSMRA90A01H501W");
-		p4.setNome("Mario");
-		p4.setCognome("Rossi");
-		p4.setMatricola(new Long(143210));
+		Paziente paziente4 = new Paziente();
+		paziente4.setCodiceFiscale("RSSMRA90A01H501W");
+		paziente4.setNome("Mario");
+		paziente4.setCognome("Rossi");
+		paziente4.setMatricola(new Long(143210));
 
-		final Paziente p5 = new Paziente();
-		p5.setCodiceFiscale("VRDGPP92B01F205A");
-		p5.setNome("Giuseppe");
-		p5.setCognome("Verdi");
-		p5.setMatricola(new Long(154321));
+		Paziente paziente5 = new Paziente();
+		paziente5.setCodiceFiscale("VRDGPpaziente92B01F205A");
+		paziente5.setNome("Giuseppe");
+		paziente5.setCognome("Verdi");
+		paziente5.setMatricola(new Long(154321));
 		
-		universitaDao.save(p1);
-		universitaDao.save(p2);
-		universitaDao.save(p3);
-		universitaDao.save(p4);
-		universitaDao.save(p5);
+		ateneoDao.save(paziente1);
+		ateneoDao.save(paziente2);
+		ateneoDao.save(paziente3);
+		ateneoDao.save(paziente4);
+		ateneoDao.save(paziente5);
 	}
 }

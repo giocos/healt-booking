@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Segnalazione implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private Integer id;
 	private String email;
 	private String nomeUtente;
@@ -11,14 +13,12 @@ public class Segnalazione implements Serializable {
 	private String commento;
 	private String risposta;
 	private Boolean risolto;
-	///////////////////////
 	private Boolean mostra;
 	
 	public Segnalazione() {}
 	
 	public Segnalazione(Integer id, String email, String nomeUtente, String motivazione, 
-						String domanda, String risposta, Boolean risolto)
-	{
+						String domanda, String risposta, Boolean risolto) {
 		this.id = id;
 		this.email = email;
 		this.nomeUtente = nomeUtente;

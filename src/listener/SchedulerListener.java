@@ -18,18 +18,16 @@ public class SchedulerListener implements ServletContextListener {
     //executors
     private Scheduler dailyScheduler;
     private ScheduledExecutorService scheduler;
-    //tasks
-    private ResetPrenotazioni resetPrenotazioni;
-    private EliminaPrenotazione eliminaPrenotazione;
-    
+
     @Override
     public void contextInitialized(ServletContextEvent servlet) {
         //init scheduler
         dailyScheduler = new Scheduler();
         scheduler = Executors.newSingleThreadScheduledExecutor();
         //init task
-        resetPrenotazioni = new ResetPrenotazioni();
-        eliminaPrenotazione = new EliminaPrenotazione();
+        //tasks
+        ResetPrenotazioni resetPrenotazioni = new ResetPrenotazioni();
+        EliminaPrenotazione eliminaPrenotazione = new EliminaPrenotazione();
         //start
         scheduler.scheduleAtFixedRate(eliminaPrenotazione, DELAY, EXEC_TIME, TimeUnit.MINUTES);
         dailyScheduler.schedule(CRON_SCHEDULE, resetPrenotazioni);

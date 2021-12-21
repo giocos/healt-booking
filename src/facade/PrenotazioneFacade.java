@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import repository.CodiceQRDao;
 import repository.PazienteDao;
 import repository.PrenotazioneDao;
-import repository.UniversitaDao;
+import repository.AteneoDao;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,10 +46,10 @@ public class PrenotazioneFacade {
     }
 
     public String checkPrenotazione() {
-        final String dateFormat = "HH:mm";
-        final String currentTime = new SimpleDateFormat(dateFormat).format(new Date());
+        String dateFormat = "HH:mm";
+        String currentTime = new SimpleDateFormat(dateFormat).format(new Date());
 
-        final Calendar start = setTimeToCalendar(dateFormat, ORARIO_INIZIO);
+        Calendar start = setTimeToCalendar(dateFormat, ORARIO_INIZIO);
         final Calendar end = setTimeToCalendar(dateFormat, ORARIO_FINE);
         final Calendar now = setTimeToCalendar(dateFormat, currentTime);
         now.set(Calendar.MINUTE, now.get(Calendar.MINUTE) + TEMPO_EFFETTIVO);
@@ -84,19 +84,16 @@ public class PrenotazioneFacade {
                 jsonReceived.append(line);
                 line = reader.readLine();
             }
-
             final JSONObject json = new JSONObject(jsonReceived.toString());
-
             final PazienteDao pazienteDao = DatabaseManager.getInstance().getDaoFactory().getPazienteDao();
             final PrenotazioneDao prenotazioneDao = DatabaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
             final CodiceQRDao codiceQRDao = DatabaseManager.getInstance().getDaoFactory().getCodiceQRDao();
-            final UniversitaDao universitaDao = DatabaseManager.getInstance().getDaoFactory().getUniversitaDao();
+            final AteneoDao ateneoDao = DatabaseManager.getInstance().getDaoFactory().getAteneoDao();
 
             Long matricola = null;
             if (!json.getString("matricola").equals("")) {
                 matricola = (Long.parseLong(json.getString("matricola")));
             }
-
             if (pazienteDao.findByPrimaryKey(json.getString("codiceFiscale")) != null) {
                 response = "false;Paziente con codice fiscale '" + json.getString("codiceFiscale") + "' gia' presente";
                 return response;
@@ -114,7 +111,7 @@ public class PrenotazioneFacade {
 
             double imp = 25d;
             if (matricola != null) {
-                final Paziente pazienteByPK = universitaDao.findByPrimaryKey(matricola);
+                final Paziente pazienteByPK = ateneoDao.findByPrimaryKey(matricola);
                 if (pazienteByPK != null) {
                     if (pazienteByPK.getNome().equals(paziente.getNome()) && pazienteByPK.getCognome().equals(paziente.getCognome())) {
                         imp = 0d;
@@ -164,6 +161,7 @@ public class PrenotazioneFacade {
 
         } catch (final JSONException | IOException e) {
             e.printStackTrace();
+
         } finally {
             try {
                 if (reader != null) {

@@ -81,7 +81,7 @@ public class CodiceQRDaoImpl implements CodiceQRDao {
 			final PreparedStatement statement = connection.prepareStatement(find);
 			final ResultSet result = statement.executeQuery();
 			
-			while(result.next()) {
+			while (result.next()) {
 				codiceQR = new CodiceQR();
 				codiceQR.setCodice(result.getString("id"));
 				codiceQR.setScadenza(result.getString("orario_Scadenza"));				

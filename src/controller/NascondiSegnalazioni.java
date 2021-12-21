@@ -17,27 +17,26 @@ public class NascondiSegnalazioni extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final SegnalazioneDao segnalazioneDao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
-		final List<Segnalazione> segnalazioni = segnalazioneDao.findAll();
-		final HttpSession session = request.getSession();
+		SegnalazioneDao segnalazioneDao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
+		List<Segnalazione> segnalazioni = segnalazioneDao.findAll();
+		HttpSession session = request.getSession();
 	    
 	    boolean tmp = true;
 	    boolean first = true;
-	    for (final Segnalazione s : segnalazioni) {
-	    	if(s.getRisolto()) {
+	    for (final Segnalazione segnalazione : segnalazioni) {
+	    	if (segnalazione.getRisolto()) {
 	    		if (first) {
-	    			tmp = s.getMostra(); 
-	    			first = false;
+					first = false;
+					tmp = segnalazione.getMostra();
 	    		}
 	    		if (tmp) {
-	    			s.setMostra(false);
-	    			segnalazioneDao.update(s);
-	    		}
+	    			segnalazione.setMostra(false);
+				}
 	    		else {
-	    			s.setMostra(true);
-	    			segnalazioneDao.update(s);
-	    		}
-	    	}
+	    			segnalazione.setMostra(true);
+				}
+				segnalazioneDao.update(segnalazione);
+			}
 	    }
   
 	    if (segnalazioni.size() > 0) {

@@ -5,12 +5,14 @@ import java.util.Date;
 
 public class Logging implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private Integer id;
-	private String azione;
 	private Date data;
+	private String azione;
 	private String orario;
 	private String nomeUtente;
-	
+
 	public Logging() {}
 	
 	public Logging(Integer id, String azione, Date data, String orario, String nomeUtente) {

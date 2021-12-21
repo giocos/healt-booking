@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Paziente implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private String codiceFiscale;
 	private String nome;
 	private String cognome;
@@ -14,8 +16,7 @@ public class Paziente implements Serializable {
 	public Paziente() {}
 	
 	public Paziente(String codiceFiscale, String nome, String cognome,
-					Long matricola, String invalidita, String codiceQR)
-	{
+					Long matricola, String invalidita, String codiceQR) {
 		this.codiceFiscale = codiceFiscale;
 		this.nome = nome;
 		this.cognome = cognome;

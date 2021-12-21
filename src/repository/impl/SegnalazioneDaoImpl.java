@@ -81,7 +81,7 @@ public class SegnalazioneDaoImpl implements SegnalazioneDao {
 			final PreparedStatement statement = connection.prepareStatement(find);
 			final ResultSet result = statement.executeQuery();
 			
-			while(result.next()) {
+			while (result.next()) {
 				segnalazione = new Segnalazione();
 				segnalazione.setId(result.getInt("id"));
 				segnalazione.setNomeUtente(result.getString("nome_utente"));

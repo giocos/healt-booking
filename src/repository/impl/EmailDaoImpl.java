@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EmailDaoImpl implements EmailDao {
 
-	private final DataSource dataSource;
+	private DataSource dataSource;
 	
 	public EmailDaoImpl(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -22,10 +22,10 @@ public class EmailDaoImpl implements EmailDao {
 	
 	@Override
 	public void save(Email email) {
-		final Connection connection = dataSource.getConnection();
+		Connection connection = dataSource.getConnection();
 		try {
-			final String insert = "INSERT INTO email(admin, messaggio, emittente, destinatario) VALUES (?,?,?,?)";
-			final PreparedStatement statement = connection.prepareStatement(insert);
+			String insert = "INSERT INTO email(admin, messaggio, emittente, destinatario) VALUES (?,?,?,?)";
+			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setString(1, email.getAdmin());
 			statement.setString(2, email.getMessaggio());
 			statement.setString(3, email.getEmittente());
@@ -47,11 +47,11 @@ public class EmailDaoImpl implements EmailDao {
 	public List<Email> findAll() {
 		Email email = null;
 		List<Email> emails = new ArrayList<>();
-		final Connection connection = dataSource.getConnection();
+		Connection connection = dataSource.getConnection();
 		try {
-			final String find = "SELECT * FROM email";
-			final PreparedStatement statement = connection.prepareStatement(find);
-			final ResultSet result = statement.executeQuery();
+			String find = "SELECT * FROM email";
+			PreparedStatement statement = connection.prepareStatement(find);
+			ResultSet result = statement.executeQuery();
 			
 			while (result.next()) {
 				email = new Email();

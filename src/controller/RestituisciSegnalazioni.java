@@ -17,9 +17,8 @@ public class RestituisciSegnalazioni extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final SegnalazioneDao segnalazioneDao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
-		final List<Segnalazione> segnalazioni = segnalazioneDao.findAll();
-		  
+		SegnalazioneDao segnalazioneDao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
+		List<Segnalazione> segnalazioni = segnalazioneDao.findAll();
 	    if (segnalazioni.size() > 0) {
 			request.setAttribute("segnalazioni", segnalazioni);
 		} else {

@@ -28,18 +28,18 @@ public class EliminaPrenotazione implements Runnable {
 	public void run() {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 
-		final CodiceQRDao codiceQRDao = factory.getCodiceQRDao();
-		final List<CodiceQR> codici = codiceQRDao.findAll();
+		CodiceQRDao codiceQRDao = factory.getCodiceQRDao();
+		List<CodiceQR> codici = codiceQRDao.findAll();
 		
 		if (!codici.isEmpty()) {
-			final PazienteDao pazienteDao = factory.getPazienteDao();
-			final PrenotazioneDao prenotazioneDao = factory.getPrenotazioneDao();
+			PazienteDao pazienteDao = factory.getPazienteDao();
+			PrenotazioneDao prenotazioneDao = factory.getPrenotazioneDao();
 			for (CodiceQR it : codici) {
 				if (scaduta(it.getScadenza()) && !it.isConvalida()) {
-					final Prenotazione prenotazione = prenotazioneDao.findByPrimaryKey(it.getCodice());
+					Prenotazione prenotazione = prenotazioneDao.findByPrimaryKey(it.getCodice());
 					prenotazioneDao.delete(prenotazione);
 
-					final Paziente paziente = pazienteDao.findByForeignKey(it.getCodice());
+					Paziente paziente = pazienteDao.findByForeignKey(it.getCodice());
 					pazienteDao.delete(paziente);
 					
 					codiceQRDao.delete(it);

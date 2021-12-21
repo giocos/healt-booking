@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Prenotazione implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private String codiceVisita;
 	private String nomePaziente;
 	private String cognomePaziente;
@@ -13,8 +15,7 @@ public class Prenotazione implements Serializable {
 	public Prenotazione() {}
 	
 	public Prenotazione(String codiceVisita, String nomePaziente, String cognomePaziente,
-						String orarioVisita, Double importo)
-	{
+						String orarioVisita, Double importo) {
 		this.codiceVisita = codiceVisita;
 		this.nomePaziente = nomePaziente;
 		this.cognomePaziente = cognomePaziente;

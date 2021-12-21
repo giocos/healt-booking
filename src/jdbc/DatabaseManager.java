@@ -2,7 +2,7 @@ package jdbc;
 
 public class DatabaseManager {
 
-	private static DatabaseManager manager;
+	private static DatabaseManager databaseManager = null;
 
 	private final DaoFactory daoFactory;
 	
@@ -12,10 +12,10 @@ public class DatabaseManager {
 
 	// Singleton Pattern
 	public static DatabaseManager getInstance() {
-		if (manager == null) {
-			manager = new DatabaseManager();
+		if (databaseManager == null) {
+			databaseManager = new DatabaseManager();
 		}
-		return manager;
+		return databaseManager;
 	}
 	
 	public DaoFactory getDaoFactory() {

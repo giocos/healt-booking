@@ -26,10 +26,9 @@ public class RisolviSegnalazione extends HttpServlet {
 		if (session.getAttribute("loggato") != null) {
 			if (session.getAttribute("loggato").equals(true)) {
 				final String risposta = request.getParameter("risposta");
-				final List<Segnalazione> s = risolviSegnalazione("", risposta);
-			    
-			    if (s.size() > 0) {
-					request.setAttribute("segnalazioni", s);
+				final List<Segnalazione> segnalazioni = risolviSegnalazione("", risposta);
+			    if (segnalazioni.size() > 0) {
+					request.setAttribute("segnalazioni", segnalazioni);
 				} else {
 					request.setAttribute("vuoto", true);
 				}
@@ -48,7 +47,7 @@ public class RisolviSegnalazione extends HttpServlet {
 		final BufferedReader reader = BufferFactory.getBufferReader(request.getInputStream());
 		String line = reader.readLine();
 		
-		while(line != null) {
+		while (line != null) {
 			jsonReceived.append(line);
 			line = reader.readLine();
 		}		
@@ -71,7 +70,6 @@ public class RisolviSegnalazione extends HttpServlet {
 	private List<Segnalazione> risolviSegnalazione(String id, String risposta) {
 		final SegnalazioneDao segnalazioneDao = DatabaseManager.getInstance().getDaoFactory().getSegnalazioneDao();
 		final List<Segnalazione> segnalazioni = segnalazioneDao.findAll();
-		  
 		if (!id.equals("")) {
 		    for (final Segnalazione s : segnalazioni) {
 		    	if (s.getId().equals(Integer.parseInt(id))) {

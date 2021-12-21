@@ -22,13 +22,12 @@ public class ConvalidaPrenotazione extends HttpServlet {
 			if (session.getAttribute("loggato").equals(true)) {
 				final String hexcode = request.getParameter("hexcode");
 				final CodiceQRDao codiceQRDao = DatabaseManager.getInstance().getDaoFactory().getCodiceQRDao();
-
 				final CodiceQR codiceQR = codiceQRDao.findByPrimaryKey(hexcode);
 				final PrenotazioneDao prenotazioneDao = DatabaseManager.getInstance().getDaoFactory().getPrenotazioneDao();
 				
 				if (codiceQR == null) {
 					response.getWriter().write("Non &egrave; stata trovata alcuna prenotazione con il codice: " + hexcode);
-				} else if(codiceQR.isConvalida()) {
+				} else if (codiceQR.isConvalida()) {
 						response.getWriter().write("Prenotazione gi&agrave; convalidata");
 					} else {
 						final String importo = String.valueOf(prenotazioneDao.findByPrimaryKey(hexcode).getImporto());

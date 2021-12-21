@@ -26,14 +26,15 @@ public class InviaEmail extends HttpServlet {
 
 	private static final String PASSWORD = "prenotazione18";
 
+	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	   this.doPost(request, response);   
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final StringBuffer jsonReceived = BufferFactory.getStringBuffer();
-		final BufferedReader reader = BufferFactory.getBufferReader(request.getInputStream());
+		StringBuffer jsonReceived = BufferFactory.getStringBuffer();
+		BufferedReader reader = BufferFactory.getBufferReader(request.getInputStream());
 		String line = reader.readLine();
 		
 		while (line != null) {
@@ -42,12 +43,10 @@ public class InviaEmail extends HttpServlet {
 		}		
 		
 		try {
-			final JSONObject json = new JSONObject(jsonReceived.toString());
-
+			JSONObject json = new JSONObject(jsonReceived.toString());
 			final String to = json.getString("to");
 			final String from = json.getString("from");
 			final String body = json.getString("message");
-
 			final Properties properties = System.getProperties();
 			properties.setProperty("mail.transport.protocol", PROTOCOL);
 

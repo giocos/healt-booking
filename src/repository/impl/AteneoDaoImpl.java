@@ -3,7 +3,7 @@ package repository.impl;
 import entity.Paziente;
 import exception.PersistenceException;
 import jdbc.DataSource;
-import repository.UniversitaDao;
+import repository.AteneoDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,20 +12,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UniversitaDaoImpl implements UniversitaDao {
+public class AteneoDaoImpl implements AteneoDao {
 
 	private final DataSource dataSource;
 	
-	public UniversitaDaoImpl(DataSource dataSource) {
+	public AteneoDaoImpl(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 	
 	@Override
 	public void save(Paziente paziente) {
-		final Connection connection = dataSource.getConnection();
+		Connection connection = dataSource.getConnection();
 		try {
-			final String insert = "INSERT INTO università(matricola, nome_paziente, cognome_paziente) VALUES (?,?,?)";
-			final PreparedStatement statement = connection.prepareStatement(insert);
+			String insert = "INSERT INTO università(matricola, nome_paziente, cognome_paziente) VALUES (?,?,?)";
+			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, paziente.getMatricola());
 			statement.setString(2, paziente.getNome());
 			statement.setString(3, paziente.getCognome());
@@ -52,7 +52,7 @@ public class UniversitaDaoImpl implements UniversitaDao {
 			statement.setLong(1, id);
 			final ResultSet result = statement.executeQuery();
 			
-			if(result.next()) {
+			if (result.next()) {
 				paziente = new Paziente();	
 				paziente.setCodiceFiscale(result.getString("matricola"));
 				paziente.setNome(result.getString("nome_paziente"));				

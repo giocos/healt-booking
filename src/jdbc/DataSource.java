@@ -19,9 +19,11 @@ public class DataSource {
 	}
 	 
 	/**
-	 * Connection: è una connessione (sessione) con uno specifico database.
+	 * Restituisce una connessione (sessione) verso uno specifico database.
 	 * Le istruzioni SQL vengono eseguite e i risultati vengono restituiti 
 	 * nel contesto di una connessione.
+	 *
+	 * @return connection
 	 */
 	public Connection getConnection() throws PersistenceException {
 		Connection connection = null; 
